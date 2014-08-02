@@ -1,0 +1,467 @@
+//
+//  MenuTableViewController.m
+//  JellyCrush
+//
+//  Created by Paulo Cristo on 23/07/14.
+//  Copyright (c) 2014 PC Dreams Software. All rights reserved.
+//
+
+#import "MenuTableViewController.h"
+#import "ViewController.h"
+#import "SWRevealViewController.h"
+#import "VirtualGood.h"
+#import "StoreInfo.h"
+#import "InsufficientFundsException.h"
+#import "JellyStoreAssets.h"
+#import "StoreEventHandling.h"
+#import "StoreInventory.h"
+#import "MyStoreTableViewCell.h"
+#import "SoomlaStore.h"
+#import "StoreInventory.h"
+#import "iToast.h"
+#import "Constants.h"
+
+
+
+@interface MenuTableViewController ()
+
+@property (nonatomic, strong) NSArray *menuItems;
+
+
+
+@end
+
+@implementation MenuTableViewController
+
+@synthesize currencyBalanceLabel;
+int balance;
+
+
+- (id)initWithStyle:(UITableViewStyle)style
+{
+    self = [super initWithStyle:style];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    _menuItems = @[@"moves5",@"moves10",@"levels",@"smash",@"dark",@"blue",@"green",@"yellow",@"red",@"pink"];
+    //[StoreInventory giveAmount:10 ofItem:@"currency_coin"];
+   
+    
+    // Uncomment the following line to preserve selection between presentations.
+    // self.clearsSelectionOnViewWillAppear = NO;
+    
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(goodBalanceChanged:) name:EVENT_GOOD_BALANCE_CHANGED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(curBalanceChanged:) name:EVENT_CURRENCY_BALANCE_CHANGED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(itemPurchased:) name:EVENT_ITEM_PURCHASED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(marketItemPurchased:) name:EVENT_MARKET_PURCHASED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(marketPurchaseCancelled:) name:EVENT_MARKET_PURCHASE_CANCELLED object:nil];
+    
+    
+    balance = [StoreInventory getItemBalance:JELLY_CURRENCY_ITEM_ID];
+    currencyBalanceLabel = [NSString stringWithFormat:@"%d", balance];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+#warning Potentially incomplete method implementation.
+    // Return the number of sections.
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+#warning Incomplete method implementation.
+    // Return the number of rows in the section.
+    return _menuItems.count;
+}
+
+-(void) refreshTable {
+    [self.tableView reloadData];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+
+    
+    NSString *CellIdentifier = [self.menuItems objectAtIndex:indexPath.row];
+    MyStoreTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+    NSInteger row = indexPath.row;
+    
+    
+    
+    if(row==3) {
+        if(balance < 500) {
+            cell.smashBombLocker.hidden=false;
+        }
+        else {
+            cell.smashBombLocker.hidden=true;
+        }
+        
+    }
+    else if(row>3) {
+        
+        if(balance<200) {
+            
+            cell.darkJellyLocker.hidden=false;
+            cell.blueJellyLocker.hidden=false;
+            cell.greenJellyLocker.hidden=false;
+            cell.yellowJellyLocker.hidden=false;
+            cell.redJellyLocker.hidden=false;
+            cell.pinkJellyLocker.hidden=false;
+            
+        }
+        else {
+            cell.darkJellyLocker.hidden=true;
+            cell.blueJellyLocker.hidden=true;
+            cell.greenJellyLocker.hidden=true;
+            cell.yellowJellyLocker.hidden=true;
+            cell.redJellyLocker.hidden=true;
+            cell.pinkJellyLocker.hidden=true;
+        }
+        
+        
+    }
+    
+
+    
+    return cell;
+    
+    
+}
+
+//I can only purchase a booster good if the balance for all is empty
+//cause i can only use 1 at the time, as help
+-(BOOL)checkBoosterGoodsBalanceEmpty {
+
+    if([StoreInventory getItemBalance:BLUE_JELLY_ITEM_ID]>0) {
+        return false;
+    }
+    else if([StoreInventory getItemBalance:DARK_JELLY_ITEM_ID]>0) {
+        return false;
+    }
+    else if([StoreInventory getItemBalance:RED_JELLY_ITEM_ID]>0) {
+        return false;
+    }
+    else if([StoreInventory getItemBalance:GREEN_JELLY_ITEM_ID]>0) {
+        return false;
+    }
+    else if([StoreInventory getItemBalance:YELLOW_JELLY_ITEM_ID]>0) {
+        return false;
+    }
+    else if([StoreInventory getItemBalance:PINK_JELLY_ITEM_ID]>0) {
+        return false;
+    }
+    else if([StoreInventory getItemBalance:SMASH_BOMB_ITEM_ID]>0) {
+        return false;
+    }
+    return true;
+}
+
+#pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //NSInteger section = indexPath.section;
+    NSInteger row =indexPath.row;
+    NSInteger numItems = _menuItems.count;
+    
+    [tableView deselectRowAtIndexPath:[tableView indexPathForSelectedRow] animated:NO];
+    
+    if(row>=3 && row <numItems) {
+        //row 3 is smash bomb
+        
+        NSInteger index = row-3; //we subtract 3, which are the market ones (5,10 moves and 10 levels)
+        //from row 4 to 8 is jellies
+        VirtualGood* good = [[[StoreInfo getInstance] virtualGoods] objectAtIndex:index];
+        
+        if([self checkBoosterGoodsBalanceEmpty]) {
+            
+            @try {
+                //[good buyWithPayload:@"this is a payload"];
+                [StoreInventory buyItemWithItemId:good.itemId andPayload:@""];
+                
+                NSString * msg = [NSString stringWithFormat:@"purchased %@",good.description ];
+                [[[[iToast makeText:msg]
+                   setGravity:iToastGravityBottom] setDuration:2000] show];
+                
+                NSLog(@"remaining balance is %d",[StoreInventory getItemBalance:good.itemId]);
+                
+            }
+            @catch (InsufficientFundsException *exception) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Insufficient funds"
+                                                                message:@"You don't have enough jelly stars to purchase this item."
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+                
+                [alert show];
+            }
+            
+        }//cannot purchase already have one
+        else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Already purchased booster"
+                                                            message:@"You can only have one booster at the time."
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            
+            [alert show];
+            
+        }
+        
+        
+        
+    }
+    else {
+        
+        NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+        NSInteger purchasedLevels = NUM_PURCHASED_LEVELS; //the standard value
+        
+        switch (row) {
+            //these are always available
+            case 0:
+                [StoreInventory buyItemWithItemId:JELLY_MANIACS_5MOVES_PACK_ITEM_ID andPayload:@"buy 5 extra moves"];
+                break;
+            case 1:
+                [StoreInventory buyItemWithItemId:JELLY_MANIACS_10MOVES_PACK_ITEM_ID andPayload:@"buy 10 extra moves" ];
+                break;
+            case 2:
+                
+                purchasedLevels = [defaults integerForKey:NUM_PURCHASED_LEVELS_KEY];
+                //do we already have the 100 available?
+                if(purchasedLevels < NUM_AVAILABLE_LEVELS) {
+                    //if not buy
+                   [StoreInventory buyItemWithItemId:JELLY_MANIACS_10LEVELS_PACK_ITEM_ID andPayload:@"buy 10 extra levels"];
+                }
+                else {
+                    //cannot buy more, not available
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No more levels"
+                                                                    message:@"You already have all available levels."
+                                                                   delegate:nil
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles:nil];
+                    
+                    [alert show];
+                }
+                
+                
+                
+                break;
+            default:
+                break;
+                
+        }
+        
+    }
+    
+    
+    
+}
+
+- (void)curBalanceChanged:(NSNotification*)notification{
+    NSLog(@"called curBalanceChanged");
+    NSDictionary* userInfo = [notification userInfo];
+    balance = [(NSNumber*)[userInfo objectForKey:DICT_ELEMENT_BALANCE] intValue];
+    currencyBalanceLabel = [NSString stringWithFormat:@"%d", balance];
+    [self refreshTable];
+}
+
+- (void)goodBalanceChanged:(NSNotification*)notification{
+    NSLog(@"called goodBalanceChanged");
+    [self refreshTable];
+}
+
+- (void)itemPurchased:(NSNotification*)notification{
+    NSLog(@"called itemPurchased");
+    NSDictionary* userInfo = [notification userInfo];
+    PurchasableVirtualItem *item = [userInfo objectForKey:DICT_ELEMENT_PURCHASABLE];
+    NSLog(@"item purchased: %@ - %@",item.itemId,item.description);
+    [self refreshTable];
+    
+}
+
+/**
+ * Here we update the settings for the items purchased from market
+ */
+ 
+- (void) marketItemPurchased:(NSNotification*)notification{
+
+    NSLog(@"called marketItemPurchased");
+    NSDictionary* userInfo = [notification userInfo];
+    PurchasableVirtualItem *item = [userInfo objectForKey:DICT_ELEMENT_PURCHASABLE];
+    NSLog(@"market item purchased: %@ - %@",item.itemId,item.description);
+    
+    
+    NSUserDefaults* defaults;
+    //did i just bought the 10 extra levels???
+    //if so i need to update the settings
+    if([item.itemId isEqualToString:JELLY_MANIACS_10LEVELS_PACK_ITEM_ID]) {
+        
+        defaults = [NSUserDefaults standardUserDefaults];
+        NSInteger purchasedLevels = [defaults integerForKey:NUM_PURCHASED_LEVELS_KEY];
+        //double check the limit
+        if(purchasedLevels < NUM_AVAILABLE_LEVELS) {
+           purchasedLevels = purchasedLevels + 10;
+        }
+        
+        //add the new 10 and save the settings
+        [defaults setInteger: purchasedLevels forKey:NUM_PURCHASED_LEVELS_KEY];
+      
+    }
+    else if([item.itemId isEqualToString:JELLY_MANIACS_10MOVES_PACK_ITEM_ID]) {
+        
+        defaults = [NSUserDefaults standardUserDefaults];
+        NSInteger purchasedMoves = [defaults integerForKey:NUM_PURCHASED_MOVES_KEY];
+        purchasedMoves = purchasedMoves + 10;
+        
+        
+        //add the new 10 and save the settings
+        [defaults setInteger: purchasedMoves forKey:NUM_PURCHASED_MOVES_KEY];
+        
+    }
+    else if([item.itemId isEqualToString:JELLY_MANIACS_5MOVES_PACK_ITEM_ID]) {
+        
+        defaults = [NSUserDefaults standardUserDefaults];
+        NSInteger purchasedMoves = [defaults integerForKey:NUM_PURCHASED_MOVES_KEY];
+        purchasedMoves = purchasedMoves + 5;
+        //add the new 5 and save the settings
+        [defaults setInteger: purchasedMoves forKey:NUM_PURCHASED_MOVES_KEY];
+        NSLog(@"setting purchased moves value to %d",purchasedMoves);
+        
+    }
+    
+    
+}
+
+-(void) marketPurchaseCancelled:(NSNotification*)notification{
+    
+    NSLog(@"called marketPurchaseCancelled");
+    NSDictionary* userInfo = [notification userInfo];
+    PurchasableVirtualItem *item = [userInfo objectForKey:DICT_ELEMENT_PURCHASABLE];
+    NSLog(@"canceled market purchase of item : %@ - %@",item.itemId,item.description);
+    //[self refreshTable];
+}
+/**
+ *#define DICT_ELEMENT_BALANCE           @"balance"
+ #define DICT_ELEMENT_CURRENCY          @"VirtualCurrency"
+ #define DICT_ELEMENT_AMOUNT_ADDED      @"amountAdded"
+ #define DICT_ELEMENT_GOOD              @"VirtualGood"
+ #define DICT_ELEMENT_EquippableVG      @"EquippableVG"
+ #define DICT_ELEMENT_UpgradeVG         @"UpgradeVG"
+ #define DICT_ELEMENT_PURCHASABLE       @"PurchasableVirtualItem"
+ #define DICT_ELEMENT_DEVELOPERPAYLOAD  @"DeveloperPayload"
+ #define DICT_ELEMENT_RECEIPT           @"receipt"
+ #define DICT_ELEMENT_TOKEN             @"token"
+ #define DICT_ELEMENT_SUCCESS           @"success"
+ #define DICT_ELEMENT_VERIFIED          @"verified"
+ #define DICT_ELEMENT_TRANSACTION       @"transaction"
+ #define DICT_ELEMENT_ERROR_CODE        @"error_code"
+ #define DICT_ELEMENT_PRODUCTID         @"productId"
+ #define DICT_ELEMENT_PRICE             @"price"
+ #define DICT_ELEMENT_TITLE             @"title"
+ #define DICT_ELEMENT_DESCRIPTION       @"description"
+ #define DICT_ELEMENT_LOCALE            @"locale"
+ #define DICT_ELEMENT_MARKET_ITEMS      @"marketItems"
+ */
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //if (indexPath.section == 1 && indexPath.row == 1) {
+    //    return SPECIAL_HEIGHT;
+    //}
+    return 80.0;//NORMAL_HEIGHT;
+}
+
+-(NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    //if(section==0) {
+    //    return  NSLocalizedString(@"header_message_send_options",nil);
+    //}
+    //else if(section==1) {
+    //    return NSLocalizedString(@"header_preferred_service",nil);
+    //}
+    
+    
+    return [NSString stringWithFormat: @"Current Balance: %d %@",balance,@" Jelly stars"];
+
+    
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 80.0;
+}
+
+
+
+/*
+// Override to support conditional editing of the table view.
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Return NO if you do not want the specified item to be editable.
+    return YES;
+}
+*/
+
+/*
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        // Delete the row from the data source
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+    }   
+}
+*/
+
+/*
+// Override to support rearranging the table view.
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+{
+}
+*/
+
+/*
+// Override to support conditional rearranging of the table view.
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Return NO if you do not want the item to be re-orderable.
+    return YES;
+}
+*/
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+
+
+@end
