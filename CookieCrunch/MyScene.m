@@ -27,11 +27,17 @@ CGFloat myScale = 1.0;
 // Sprite that is drawn on top of the cookie that the player is trying to swap.
 @property (strong, nonatomic) SKSpriteNode *selectionSprite;
 
+@property (strong, nonatomic) SKAction *explosionSound;
 @property (strong, nonatomic) SKAction *swapSound;
 @property (strong, nonatomic) SKAction *invalidSwapSound;
 @property (strong, nonatomic) SKAction *matchSound;
 @property (strong, nonatomic) SKAction *fallingCookieSound;
 @property (strong, nonatomic) SKAction *addCookieSound;
+
+@property (strong, nonatomic) SKAction *superCoolSound;
+@property (strong, nonatomic) SKAction *awesomeMoveSound;
+@property (strong, nonatomic) SKAction *jellyManiacSound;
+@property (strong, nonatomic) SKAction * passLevelSound;
 
 @property (strong, nonatomic) SKCropNode *cropLayer;
 @property (strong, nonatomic) SKNode *maskLayer;
@@ -41,6 +47,8 @@ CGFloat myScale = 1.0;
 @property (strong, nonatomic) PCJelly *booster;
 
 @property NSTimeInterval lastUpdateTime;
+@property NSTimeInterval lastMoveTime;
+
 
 @end
 
@@ -61,10 +69,14 @@ CGFloat myScale = 1.0;
     
     self.touchedBooster = false;
     self.booster = nil;
-
+      
+    self.lastMoveTime = 0;
+    self.lastUpdateTime = 0;
+    
     // Put an image on the background. Because the scene's anchorPoint is
     // (0.5, 0.5), the background image will always be centered on the screen.
-    SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"bg_dirt@2x.png"];
+    SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"grass-and-the-sky-background.jpg"];//dunes.jpgdunes.jpgbeach.jpg
+    background.name = @"background";
     [self addChild:background];
 
     // Add a new node that is the container for all other layers on the playing
@@ -110,12 +122,64 @@ CGFloat myScale = 1.0;
   return self;
 }
 
+//gives the freeze time
+- (NSTimeInterval)getPlayerSleepingTime {
+    if(self.lastMoveTime==0) {
+        self.lastMoveTime = self.lastUpdateTime;
+    }
+    return self.lastUpdateTime - self.lastMoveTime;
+}
+
+- (void)resetSleepingTimer {
+    self.lastMoveTime = self.lastUpdateTime;
+}
+
+- (void)loadBackgroundForLevel:(NSUInteger) levelNumber {
+    
+    SKSpriteNode *background = (SKSpriteNode *)[self childNodeWithName:@"background"];
+    
+    if(background!=nil) {
+        switch(levelNumber) {
+            case 10:
+                background.texture = [SKTexture textureWithImageNamed:@"beach.jpg"];
+                break;
+            case 20:
+                background.texture = [SKTexture textureWithImageNamed:@"desert.jpg"];
+                break;
+            case 30:
+                background.texture = [SKTexture textureWithImageNamed:@"grass.jpg"];
+                break;
+            case 40:
+                background.texture = [SKTexture textureWithImageNamed:@"grass-and-the-sky-background.jpg"];
+                break;
+                
+            case 50:
+                background.texture = [SKTexture textureWithImageNamed:@"brickwall@2x.png"];
+                break;
+                
+                
+                
+            default:
+                background.texture = [SKTexture textureWithImageNamed:@"bg_dirt@2x.png"];
+                break;
+        }
+    }
+    
+}
+
 - (void)preloadResources {
   self.swapSound = [SKAction playSoundFileNamed:@"Chomp.wav" waitForCompletion:NO];
   self.invalidSwapSound = [SKAction playSoundFileNamed:@"Error.wav" waitForCompletion:NO];
   self.matchSound = [SKAction playSoundFileNamed:@"Ka-Ching.wav" waitForCompletion:NO];
   self.fallingCookieSound = [SKAction playSoundFileNamed:@"Scrape.wav" waitForCompletion:NO];
   self.addCookieSound = [SKAction playSoundFileNamed:@"Drip.wav" waitForCompletion:NO];
+  self.explosionSound = [SKAction playSoundFileNamed:@"explosion.wav" waitForCompletion:NO];
+    
+  self.awesomeMoveSound = [SKAction playSoundFileNamed:@"awsomemove3.m4a" waitForCompletion:NO];
+  self.superCoolSound = [SKAction playSoundFileNamed:@"supercool2.m4a" waitForCompletion:NO];
+  self.jellyManiacSound = [SKAction playSoundFileNamed:@"jellymaniac2.m4a" waitForCompletion:NO];
+  self.passLevelSound = [SKAction playSoundFileNamed:@"iuu.m4a" waitForCompletion:NO];
+
 
   [SKLabelNode labelNodeWithFontNamed:@"GillSans-BoldItalic"];
 }
@@ -319,6 +383,8 @@ CGFloat myScale = 1.0;
             [sprite setScale:myScale];
             
             
+            
+            
         }
         else {
             
@@ -405,7 +471,7 @@ CGFloat myScale = 1.0;
 
 }
 
-//get the store id, given the jelly type
+//get the store id, given the jelly type, does not apply to bomb
 -(NSString *)getStoreItemId: (NSUInteger) forType {
     
     switch (forType) {
@@ -434,15 +500,22 @@ CGFloat myScale = 1.0;
     return BLUE_JELLY_ITEM_ID;
 }
 
+//adds a particle to the scene
 -(ParticleEmitterNode *) addParticle: (NSString *) particleName andInterval: (float) timeToLive {
     
     ParticleEmitterNode *myParticle = [[ParticleEmitterNode alloc] initWithName:particleName andTimeToLive:timeToLive andCreationDate:self.lastUpdateTime];
-    
-    //[arrayOfParticles addObject:myParticle];
-    
     return myParticle;
 }
 
+//timer called, to remove the bomb related particles
+-(void) removeParticles {
+    
+    
+    [[self childNodeWithName:@"MySmokeParticle"] removeFromParent];
+    [[self childNodeWithName:@"MyFireParticle"] removeFromParent];
+    
+    
+}
 
 /*pulseRed = [SKAction sequence:@[
  [SKAction colorizeWithColor:[SKColor redColor] colorBlendFactor:1.0 duration:0.15],
@@ -472,6 +545,9 @@ CGFloat myScale = 1.0;
     PCJelly *cookie = [self.level cookieAtColumn:column row:row];
     if (cookie != nil) {
         
+        //touched a jelly reset the time
+        [self resetSleepingTimer];
+        
         //**************** SWAP THEM *******************//
         if( touchedBoosterTemp && self.booster!=nil) {
            
@@ -487,13 +563,37 @@ CGFloat myScale = 1.0;
                 
                 [self runAction:[SKAction playSoundFileNamed:@"explosion.wav" waitForCompletion:NO]];
                 ParticleEmitterNode * mySmokeParticle = [self addParticle:@"MySmokeParticle" andInterval:1];
-                mySmokeParticle.particle.particlePosition = cookie.sprite.position;
+                mySmokeParticle.particle.particlePosition = [touch locationInNode:self.scene];
+                //mySmokeParticle.particle.name = @"smoke";
                 [self addChild: mySmokeParticle.particle];
+                
+                [self runAction:self.explosionSound];
                 
                 //[firstBody.node runAction:pulseRed];
                 ParticleEmitterNode * myFireParticle = [self addParticle:@"MyFireParticle" andInterval:5000];
-                myFireParticle.particle.particlePosition = cookie.sprite.position;
+                myFireParticle.particle.particlePosition = [touch locationInNode:self.scene];
+                //myFireParticle.particle.name = @"fire";
                 [self addChild: myFireParticle.particle];
+                
+                
+                //remove them
+                //lazy load
+                //if(self.particlesArray==nil) {
+                  //  self.particlesArray = [[NSMutableArray alloc] init];
+                //}
+                
+                //add the perticles to the array, to allow themselves to remove later
+                //[self.particlesArray addObject:myFireParticle];
+                //[self.particlesArray addObject:mySmokeParticle];
+                
+                //try to autoremove particles from scene, if ttl is over
+                [NSTimer scheduledTimerWithTimeInterval:2.0  target:self
+                                               selector:@selector(removeParticles)
+                                               userInfo:nil
+                                                repeats:NO];
+                
+                
+                
                 
             }
             else if(self.booster.cookieType!=cookie.cookieType){
@@ -502,8 +602,6 @@ CGFloat myScale = 1.0;
             
             //set the type to the new type
             cookie.cookieType = self.booster.cookieType;
-            
-            //_cookies[column][row] = cookie;
             
             //save the position
             self.booster.sprite.position = cookie.sprite.position;
@@ -520,16 +618,13 @@ CGFloat myScale = 1.0;
             //assign the new swap action
             cookie.swapAction = self.booster.swapAction;
             
-            //remove 1 unit from the inventory
-            [StoreInventory takeAmount:1 ofItem:self.booster.itemId];
             
-            //atribute the new one
-            //cookie = self.booster;
-            
-             [self notifyBoosterUsage];
             }
 
-            
+            //remove 1 unit from the inventory
+            [StoreInventory takeAmount:1 ofItem:self.booster.itemId];
+            //notify the controller, of the touched cookie
+            [self notifyBoosterUsage: cookie];
             
             
             self.touchedBooster = false;
@@ -560,10 +655,101 @@ CGFloat myScale = 1.0;
     
 }
 
-- (void)notifyBoosterUsage {
-    NSLog(@"notify");
+//gets the neighbours of the blasted cookie
+-(NSSet *) getNeighbourBombedCookiesChain: (PCJelly *) blastedJelly{
+    NSMutableSet *set = [NSMutableSet set];
+    
+    PCChain *chain = [[PCChain alloc] init];
+    [chain addCookie:blastedJelly];
+    
+    NSInteger startCol = blastedJelly.column;
+    NSInteger startRow = blastedJelly.row;
+    
+    //get the left and the right one and build first chain
+    if(startCol+1 < NumColumns ) {
+        PCJelly *cookieRight = [self.level cookieAtColumn:startCol+1 row:startRow];
+        if(cookieRight!=nil) {
+            [chain addCookie:cookieRight];
+        }
+    }
+    if(startCol-1 >=0 ) {
+        PCJelly *cookieLeft = [self.level cookieAtColumn:startCol-1 row:startRow];
+        if(cookieLeft!=nil) {
+            [chain addCookie:cookieLeft];
+        }
+    }
+    
+    //add this first chain to the set
+    chain.score = chain.cookies.count*20 ;
+    [set addObject:chain];
+    
+    //now get the top chain
+    PCChain *chainTop = [[PCChain alloc] init];
+    if(startRow-1>=0) {
+        PCJelly *cookieTop = [self.level cookieAtColumn:startCol row:startRow-1];
+        if(cookieTop!=nil) {
+            [chainTop addCookie:cookieTop];
+        }
+        //top left
+        if(startCol-1>=0 ){
+            PCJelly *cookieTopLeft = [self.level cookieAtColumn:startCol-1 row:startRow-1];
+            if(cookieTopLeft!=nil) {
+                [chainTop addCookie:cookieTopLeft];
+            }
+        }
+        //top right
+        if(startCol+1<NumColumns ){
+            PCJelly *cookieTopRight = [self.level cookieAtColumn:startCol+1 row:startRow-1];
+            if(cookieTopRight!=nil) {
+                [chainTop addCookie:cookieTopRight];
+            }
+        }
+        chainTop.score = chainTop.cookies.count*20 ;
+        [set addObject:chainTop];
+    }
+    
+    //now get the bottom chain
+    PCChain *chainBottom = [[PCChain alloc] init];
+    if(startRow+1<NumRows) {
+        PCJelly *cookieBottom = [self.level cookieAtColumn:startCol row:startRow+1];
+        if(cookieBottom!=nil) {
+            [chainBottom addCookie:cookieBottom];
+        }
+        //bottom left
+        if(startCol-1>=0 ){
+            PCJelly *cookieBottomLeft = [self.level cookieAtColumn:startCol-1 row:startRow+1];
+            if(cookieBottomLeft!=nil) {
+                [chainBottom addCookie:cookieBottomLeft];
+            }
+        }
+        //top right
+        if(startCol+1<NumColumns ){
+            PCJelly *cookieBottomRight = [self.level cookieAtColumn:startCol+1 row:startRow+1];
+            if(cookieBottomRight!=nil) {
+                [chainBottom addCookie:cookieBottomRight];
+            }
+        }
+        chainBottom.score = chainBottom.cookies.count*20 ;
+        [set addObject:chainBottom];
+    }
+    
+    
+    
+    /**
+     NSAssert1(column >= 0 && column < NumColumns, @"Invalid column: %ld", (long)column);
+     NSAssert1(row >= 0 && row < NumRows, @"Invalid row: %ld", (long)row);
+     
+     return _cookies[column][row];
+     *
+     **/
+    
+    return set;
+}
+
+- (void)notifyBoosterUsage:(PCJelly *)touchedJelly {
+    
     NSDictionary *userInfo = [NSDictionary dictionaryWithObject:
-                              self.booster.sprite.name forKey:@"booster"];
+                              touchedJelly forKey:@"booster"];
                               [[NSNotificationCenter defaultCenter]
                                postNotificationName:@"ReportBoosterInPlace" object:self userInfo:userInfo];
 }
@@ -649,6 +835,10 @@ CGFloat myScale = 1.0;
   // If the gesture ended, regardless of whether if was a valid swipe or not,
   // reset the starting column and row numbers.
   self.swipeFromColumn = self.swipeFromRow = NSNotFound;
+    
+  //we record this as the time of the last move
+  self.lastMoveTime = self.lastUpdateTime;
+    
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -765,6 +955,24 @@ CGFloat myScale = 1.0;
     [SKAction runBlock:completion]
     ]]];
 }
+
+//play sounds from controller
+- (void)playSuperCoolSound {
+    [self runAction:self.superCoolSound];
+}
+- (void)playAwesomeMoveSound {
+    [self runAction:self.awesomeMoveSound];
+}
+- (void)playJellyManiacSound{
+    [self runAction:self.jellyManiacSound];
+}
+
+- (void)playPassLevelSound{
+    [self runAction:self.passLevelSound];
+}
+
+
+
 
 - (void)animateScoreForChain:(PCChain *)chain {
   // Figure out what the midpoint of the chain is.

@@ -477,6 +477,7 @@
   }
 }
 
+
 - (void)calculateScores:(NSSet *)chains {
   // 3-chain is 60 pts, 4-chain is 120, 5-chain is 180, and so on
   for (PCChain *chain in chains) {

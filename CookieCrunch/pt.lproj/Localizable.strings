@@ -1,0 +1,38 @@
+/* 
+  Localizable.strings
+  JellyCrush
+
+  Created by Paulo Cristo on 16/08/14.
+  Copyright (c) 2014 PC Dreams Software. All rights reserved.
+*/
+
+
+
+"congratulations_purchase" = "Parabéns! Compra efectuada.";
+"congratulations_purchased" = "Parabéns! Acabaste de comprar";
+"failed_purchase" = "Erro! A compra falhou";
+"facebook_post_ok" = "Mensagem enviada para o Facebook";
+"twitter_post_ok" = "Mensagem enviada para o Twitter";
+"facebook_post_canceled" = "Envio para o Facebook cancelado";
+"twitter_post_canceled" = "Envio para o Twitter cancelado";
+"level" = "Nível";
+"you_won"="Ganhaste";
+"no_more_levels"="Não existem níveis";
+"buy_10_levels"="Podes comprar 10 níveis extra para continuares a jogar.";
+"no_more_levels_improve"="Não existem mais níveis disponíveis. É altura de tentares melhorar o teu recorde.";
+"insufficient_funds"="Saldo insuficiente";
+"not_enough_jellys"="Não tens estrelas suficientes para comprar este item. Continua a jogar.";
+"already_purchased_booster" = "Já compraste esta ajuda";
+"only_one_booster"="Só podes ter uma ajuda de cada vez.";
+"have_all_levels"="Já tens todos os níveis disponíveis.";
+"bomb_touch_msg"="Agora toca na gelatina onde queres largar a bomba!";
+"jelly_touch_msg"="Agora toca na gelatina que queres substituir!";
+"current_balance"="Saldo Actual";
+"jelly_stars"="Estrelas";
+"no_more_moves" = "Jogadas insuficientes";
+"last_level_buy_warning" = "Último nível disponível";
+"running_out_moves"="Comprar jogadas extra para terminar o nível?";
+"running_out_levels"="Comprar níveis extra para continuar a jogar?";
+"restore_purchases"="Repor compras";
+"music_off"="Música desligada";
+"music_on"="Música ligada";

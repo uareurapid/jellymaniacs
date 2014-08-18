@@ -18,12 +18,12 @@
         
         NSString *myParticlePath = [[NSBundle mainBundle] pathForResource:name ofType:@"sks"];
         particle = [NSKeyedUnarchiver unarchiveObjectWithFile:myParticlePath];
-        particle.name = @"particle";
+        particle.name = name==nil ? @"particle" : name;
+        particleCreationDate = creationDate;
+        timeToLive = ttl;
     }
     
     
-    particleCreationDate = creationDate;
-    timeToLive = ttl;
     return self;
 }
 
@@ -38,6 +38,9 @@
         [particle removeFromParent];
         return true;
     }
+    NSLog(@"actual time %f",actualTime);
+    NSLog(@"particleCreationDate time %f",particleCreationDate);
+    NSLog(@"timeToLive time %f",timeToLive);
     return false;
     
 }

@@ -13,7 +13,10 @@
 #import "StoreInventory.h"
 #import "VirtualCurrency.h"
 #import "Constants.h"
+#import "ALSdk.h"
+#import "Appirater.h"
 
+#define DEBUG_RUN
 
 @implementation AppDelegate
 
@@ -40,6 +43,10 @@
         [(VirtualCurrency*)[storeAssets.virtualCurrencies objectAtIndex:0] giveAmount:1000];
     }
     
+    //test
+#ifdef DEBUG_RUN
+    [(VirtualCurrency*)[storeAssets.virtualCurrencies objectAtIndex:0] giveAmount:1000];
+#endif
     //if not exists, set the total number of levels (as for version 1.0 is 100)
     if (![defaults integerForKey:NUM_AVAILABLE_LEVELS_KEY])
     {
@@ -59,6 +66,23 @@
     {
         [defaults setInteger:NUM_PURCHASED_MOVES forKey:NUM_PURCHASED_MOVES_KEY];
     }
+    
+    //initialize applovin sdk
+    [ALSdk initializeSdk];
+    
+    //API rater stuff
+    //show it 5 days after
+    //custom Rate code
+    [Appirater setAppId:@"904072768"];
+    [Appirater setDaysUntilPrompt:5];
+    [Appirater setUsesUntilPrompt:0];
+    [Appirater setSignificantEventsUntilPrompt:-1];
+    [Appirater setTimeBeforeReminding:2];
+    [Appirater setDebug:NO];
+    //end custom code
+    
+    //custom Rate code
+    [Appirater appLaunched:YES];
 
     return YES;
 }

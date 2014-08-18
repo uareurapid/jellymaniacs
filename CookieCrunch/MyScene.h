@@ -33,6 +33,17 @@
 - (void)animateGameOver;
 - (void)animateBeginGame;
 
+- (void)loadBackgroundForLevel:(NSUInteger) levelNumber;
+
 - (void)addBoosterImageNamed:(NSString *) imageName;
+-(NSSet *) getNeighbourBombedCookiesChain: (PCJelly *) blastedJelly;
+
+- (void)playSuperCoolSound;
+- (void)playAwesomeMoveSound;
+- (void)playJellyManiacSound;
+- (void)playPassLevelSound;
+
+- (NSTimeInterval)getPlayerSleepingTime;
+- (void)resetSleepingTimer;
 
 @end

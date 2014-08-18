@@ -50,7 +50,7 @@ int balance;
 {
     [super viewDidLoad];
 
-    _menuItems = @[@"moves5",@"moves10",@"levels",@"smash",@"dark",@"blue",@"green",@"yellow",@"red",@"pink"];
+    _menuItems = @[@"moves5",@"moves10",@"levels",@"smash",@"dark",@"blue",@"green",@"yellow",@"red",@"pink",@"restore"];
     //[StoreInventory giveAmount:10 ofItem:@"currency_coin"];
    
     
@@ -182,11 +182,16 @@ int balance;
 {
     //NSInteger section = indexPath.section;
     NSInteger row =indexPath.row;
-    NSInteger numItems = _menuItems.count;
+    NSInteger restore = _menuItems.count-1;//last one
     
     [tableView deselectRowAtIndexPath:[tableView indexPathForSelectedRow] animated:NO];
     
-    if(row>=3 && row <numItems) {
+    if(row==restore) {
+        [[[[iToast makeText:NSLocalizedString(@"restore_purchases", @"restore_purchases")]
+           setGravity:iToastGravityBottom] setDuration:2000] show];
+        [[SoomlaStore getInstance] restoreTransactions];
+    }
+    else if(row>=3 && row < restore) {
         //row 3 is smash bomb
         
         NSInteger index = row-3; //we subtract 3, which are the market ones (5,10 moves and 10 levels)
@@ -199,7 +204,8 @@ int balance;
                 //[good buyWithPayload:@"this is a payload"];
                 [StoreInventory buyItemWithItemId:good.itemId andPayload:@""];
                 
-                NSString * msg = [NSString stringWithFormat:@"purchased %@",good.description ];
+                NSString * msg = [NSString stringWithFormat: @"%@ %@",NSLocalizedString(@"congratulations_purchased", @"congratulations_purchased"),
+                                  good.description ];
                 [[[[iToast makeText:msg]
                    setGravity:iToastGravityBottom] setDuration:2000] show];
                 
@@ -207,8 +213,8 @@ int balance;
                 
             }
             @catch (InsufficientFundsException *exception) {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Insufficient funds"
-                                                                message:@"You don't have enough jelly stars to purchase this item."
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"insufficient_funds", @"insufficient_funds")
+                                                                message:NSLocalizedString(@"not_enough_jellys", @"not_enough_jellys")
                                                                delegate:nil
                                                       cancelButtonTitle:@"OK"
                                                       otherButtonTitles:nil];
@@ -218,8 +224,8 @@ int balance;
             
         }//cannot purchase already have one
         else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Already purchased booster"
-                                                            message:@"You can only have one booster at the time."
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"already_purchased_booster", @"already_purchased_booster")
+                                                            message:NSLocalizedString(@"only_one_booster", @"only_one_booster")
                                                            delegate:nil
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];
@@ -254,8 +260,8 @@ int balance;
                 }
                 else {
                     //cannot buy more, not available
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No more levels"
-                                                                    message:@"You already have all available levels."
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"no_more_levels", @"no_more_levels")
+                                                                    message:NSLocalizedString(@"have_all_levels", @"have_all_levels")
                                                                    delegate:nil
                                                           cancelButtonTitle:@"OK"
                                                           otherButtonTitles:nil];
@@ -263,9 +269,8 @@ int balance;
                     [alert show];
                 }
                 
-                
-                
                 break;
+
             default:
                 break;
                 
@@ -278,7 +283,7 @@ int balance;
 }
 
 - (void)curBalanceChanged:(NSNotification*)notification{
-    NSLog(@"called curBalanceChanged");
+    //NSLog(@"called curBalanceChanged");
     NSDictionary* userInfo = [notification userInfo];
     balance = [(NSNumber*)[userInfo objectForKey:DICT_ELEMENT_BALANCE] intValue];
     currencyBalanceLabel = [NSString stringWithFormat:@"%d", balance];
@@ -286,12 +291,12 @@ int balance;
 }
 
 - (void)goodBalanceChanged:(NSNotification*)notification{
-    NSLog(@"called goodBalanceChanged");
+    //NSLog(@"called goodBalanceChanged");
     [self refreshTable];
 }
 
 - (void)itemPurchased:(NSNotification*)notification{
-    NSLog(@"called itemPurchased");
+    //NSLog(@"called itemPurchased");
     NSDictionary* userInfo = [notification userInfo];
     PurchasableVirtualItem *item = [userInfo objectForKey:DICT_ELEMENT_PURCHASABLE];
     NSLog(@"item purchased: %@ - %@",item.itemId,item.description);
@@ -305,10 +310,15 @@ int balance;
  
 - (void) marketItemPurchased:(NSNotification*)notification{
 
-    NSLog(@"called marketItemPurchased");
+    //NSLog(@"called marketItemPurchased");
     NSDictionary* userInfo = [notification userInfo];
     PurchasableVirtualItem *item = [userInfo objectForKey:DICT_ELEMENT_PURCHASABLE];
     NSLog(@"market item purchased: %@ - %@",item.itemId,item.description);
+    
+    NSString * msg = [NSString stringWithFormat: @"%@ %@",NSLocalizedString(@"congratulations_purchased", @"congratulations_purchased"),
+                      item.description ];
+    [[[[iToast makeText:msg]
+       setGravity:iToastGravityBottom] setDuration:2000] show];
     
     
     NSUserDefaults* defaults;
@@ -345,7 +355,7 @@ int balance;
         purchasedMoves = purchasedMoves + 5;
         //add the new 5 and save the settings
         [defaults setInteger: purchasedMoves forKey:NUM_PURCHASED_MOVES_KEY];
-        NSLog(@"setting purchased moves value to %d",purchasedMoves);
+        //NSLog(@"setting purchased moves value to %ld",(long)purchasedMoves);
         
     }
     
@@ -354,7 +364,7 @@ int balance;
 
 -(void) marketPurchaseCancelled:(NSNotification*)notification{
     
-    NSLog(@"called marketPurchaseCancelled");
+    //NSLog(@"called marketPurchaseCancelled");
     NSDictionary* userInfo = [notification userInfo];
     PurchasableVirtualItem *item = [userInfo objectForKey:DICT_ELEMENT_PURCHASABLE];
     NSLog(@"canceled market purchase of item : %@ - %@",item.itemId,item.description);
@@ -393,15 +403,11 @@ int balance;
 }
 
 -(NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    //if(section==0) {
-    //    return  NSLocalizedString(@"header_message_send_options",nil);
-    //}
-    //else if(section==1) {
-    //    return NSLocalizedString(@"header_preferred_service",nil);
-    //}
+
     
-    
-    return [NSString stringWithFormat: @"Current Balance: %d %@",balance,@" Jelly stars"];
+    return [NSString stringWithFormat: @"%@: %d %@",NSLocalizedString(@"current_balance", @"current_balance"),
+            balance,
+            NSLocalizedString(@"jelly_stars", @"jelly_stars")];
 
     
 }
@@ -411,7 +417,23 @@ int balance;
     return 80.0;
 }
 
-
+/*
+ 
+ -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+ {
+ UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 18)];
+ // Create custom view to display section header...
+UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, tableView.frame.size.width, 18)];
+[label setFont:[UIFont boldSystemFontOfSize:12]];
+NSString *string =[list objectAtIndex:section];
+// Section header is in 0th index...
+[label setText:string];
+[view addSubview:label];
+[view setBackgroundColor:[UIColor colorWithRed:166/255.0 green:177/255.0 blue:186/255.0 alpha:1.0]];
+//your background color...
+return view;
+}
+*/
 
 /*
 // Override to support conditional editing of the table view.

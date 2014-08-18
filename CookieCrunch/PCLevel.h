@@ -67,6 +67,8 @@ static const NSInteger NumRows = 9;
 // Should be called at the start of every new turn.
 - (void)resetComboMultiplier;
 
+- (void)removeCookies:(NSSet *)chains;
+
 -(int) getNumRows;
 -(int) getNumCols;
 

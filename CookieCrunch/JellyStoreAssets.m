@@ -37,7 +37,7 @@ NSString* const JELLY_CURRENCY_ITEM_ID = @"jelly_currency";
 
 NSString* const GREEN_JELLY_ITEM_ID = @"green_jelly_item_id";
 NSString* const DARK_JELLY_ITEM_ID= @"dark_jelly_item_id";
-NSString* const PINK_JELLY_ITEM_ID= @"green_jelly_item_id";
+NSString* const PINK_JELLY_ITEM_ID= @"pink_jelly_item_id";
 NSString* const YELLOW_JELLY_ITEM_ID= @"yellow_jelly_item_id";
 NSString* const RED_JELLY_ITEM_ID= @"red_jelly_item_id";
 NSString* const BLUE_JELLY_ITEM_ID= @"blue_jelly_item_id";

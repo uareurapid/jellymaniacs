@@ -1,0 +1,56 @@
+
+/* Class = "IBUILabel"; text = "+10 Levels"; ObjectID = "1aF-J3-hRj"; */
+"1aF-J3-hRj.text" = "+10 Níveis";
+
+/* Class = "IBUILabel"; text = "999999"; ObjectID = "1ls-qb-pYa"; */
+"1ls-qb-pYa.text" = "999999";
+
+/* Class = "IBUILabel"; text = "999999"; ObjectID = "23A-mi-aPc"; */
+"23A-mi-aPc.text" = "999999";
+
+/* Class = "IBUILabel"; text = "Level"; ObjectID = "4MV-oJ-Qqg"; */
+"4MV-oJ-Qqg.text" = "Nível";
+
+/* Class = "IBUILabel"; text = "X1"; ObjectID = "4wT-NZ-mDe"; */
+"4wT-NZ-mDe.text" = "X1";
+
+/* Class = "IBUILabel"; text = "+5 Moves"; ObjectID = "Arj-Jm-tCg"; */
+"Arj-Jm-tCg.text" = "+5 Jogadas";
+
+/* Class = "IBUILabel"; text = "999999"; ObjectID = "DEW-gM-Sah"; */
+"DEW-gM-Sah.text" = "999999";
+
+/* Class = "IBUILabel"; text = "+10 Moves"; ObjectID = "F9s-Rp-BY6"; */
+"F9s-Rp-BY6.text" = "+10 Jogadas";
+
+/* Class = "IBUILabel"; text = "X1"; ObjectID = "FOE-R8-Gi9"; */
+"FOE-R8-Gi9.text" = "X1";
+
+/* Class = "IBUILabel"; text = "You won:"; ObjectID = "IYl-Io-Tr1"; */
+"IYl-Io-Tr1.text" = "Ganhaste:";
+
+/* Class = "IBUILabel"; text = "Score"; ObjectID = "KPe-Ii-meF"; */
+"KPe-Ii-meF.text" = "Pontuação";
+
+/* Class = "IBUILabel"; text = "X1"; ObjectID = "OIs-7U-tdj"; */
+"OIs-7U-tdj.text" = "X1";
+
+/* Class = "IBUILabel"; text = "Score"; ObjectID = "STZ-Yy-GoN"; */
+"STZ-Yy-GoN.text" = "Pontuação";
+
+/* Class = "IBUILabel"; text = "Score"; ObjectID = "VG2-xl-BdT"; */
+"VG2-xl-BdT.text" = "Pontuação";
+
+/* Class = "IBUILabel"; text = "X1"; ObjectID = "aK9-Um-0dS"; */
+"aK9-Um-0dS.text" = "X1";
+
+/* Class = "IBUILabel"; text = "X1"; ObjectID = "bzl-lO-LHU"; */
+"bzl-lO-LHU.text" = "X1";
+
+/* Class = "IBUILabel"; text = "X1"; ObjectID = "u4h-s7-3Be"; */
+"u4h-s7-3Be.text" = "X1";
+
+/* Class = "IBUILabel"; text = "Bomb X1"; ObjectID = "yrt-7E-aRd"; */
+"yrt-7E-aRd.text" = "Bomba X1";
+
+"2UR-lD-ILC" = "Repor Compras";
