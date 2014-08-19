@@ -17,11 +17,26 @@
 //this will increment by 5 or 10
 #define NUM_PURCHASED_MOVES 0
 
+//i can only play this 10 without share to twitter
+//otherwise i need to wait 3 minutes
+#define MAX_PLAYS_WITHOUT_SHARE 10
+
+//max times i can share to facebook and wind 500 stars
+#define MAX_FACEBOOK_SHARES 3
+
 #define TARGET_INCREASE_BY_LEVEL 20
 
-#define NUM_PURCHASED_MOVES_KEY @"NUM_PURCHASED_MOVES_KEY"
-#define NUM_AVAILABLE_LEVELS_KEY @"NUM_AVAILABLE_LEVELS_KEY"
-#define NUM_PURCHASED_LEVELS_KEY @"NUM_PURCHASED_LEVELS_KEY"
+#define EXTRA_MOVE_BONUS_LEVEL 20
+
+#define NUM_PURCHASED_MOVES_KEY     @"NUM_PURCHASED_MOVES_KEY"
+#define NUM_AVAILABLE_LEVELS_KEY    @"NUM_AVAILABLE_LEVELS_KEY"
+#define NUM_PURCHASED_LEVELS_KEY    @"NUM_PURCHASED_LEVELS_KEY"
+#define NUM_JELLY_PLAYS_KEY         @"NUM_JELLY_PLAYS_KEY"
+#define LAST_SAVE_KEY               @"LAST_SAVE_KEY"
+#define SHARED_TWITTER_KEY          @"SHARED_TWITTER_KEY"
+#define SHARED_FACEBOOK_KEY         @"SHARED_FACEBOOK_KEY"
+
+#define LEVEL_20_BONUS_KEY          @"LEVEL_20_BONUS_KEY"
 
 #define JELLY_MANIACS_LEADERBOARD                   @"jelly_maniacs_leaderboard"
 #define JELLY_MANIACS_REACH_LEVEL_50_ACHIEVEMENT    @"jelly_maniacs_level50_achievement"

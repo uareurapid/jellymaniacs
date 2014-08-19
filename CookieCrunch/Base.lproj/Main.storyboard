@@ -27,10 +27,10 @@
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="twitter.png" id="clz-He-oNU" userLabel="Image View - twitter.png">
                                 <rect key="frame" x="170" y="329" width="64" height="64"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GameOver" id="TuL-Df-D2l">
-                                <rect key="frame" x="0.0" y="189" width="320" height="196"/>
+                                <rect key="frame" x="0.0" y="187" width="320" height="196"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="replay.png" id="YIV-3d-1me" userLabel="Image View - replay.png">
@@ -59,7 +59,7 @@
                                 <rect key="frame" x="218" y="30" width="102" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="999999" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1ls-qb-pYa">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1ls-qb-pYa">
                                 <rect key="frame" x="277" y="37" width="46" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="16"/>
@@ -72,7 +72,7 @@
                                 <rect key="frame" x="5" y="30" width="102" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="999999" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DEW-gM-Sah">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DEW-gM-Sah">
                                 <rect key="frame" x="65" y="37" width="72" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="16"/>
@@ -94,7 +94,7 @@
                                 <rect key="frame" x="102" y="25" width="110" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="999999" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="23A-mi-aPc">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="23A-mi-aPc">
                                 <rect key="frame" x="145" y="39" width="72" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="20"/>
@@ -152,7 +152,7 @@
                                 <rect key="frame" x="211" y="-5" width="102" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="200" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qvF-zo-WNu">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qvF-zo-WNu">
                                 <rect key="frame" x="251" y="9" width="59" height="23"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="14"/>
@@ -160,32 +160,70 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="needhelp.png" id="IEQ-E2-HGa">
-                                <rect key="frame" x="189" y="417" width="80" height="80"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <rect key="frame" x="189" y="427" width="80" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="musicoff.png" id="JFp-2i-Y7N">
                                 <rect key="frame" x="261" y="500" width="48" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shareandwin.png" id="PYR-bv-8Sm">
-                                <rect key="frame" x="62" y="393" width="200" height="100"/>
+                                <rect key="frame" x="62" y="410" width="200" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="share_twitter_or_wait.png" id="bot-rJ-XO4">
+                                <rect key="frame" x="37" y="109" width="240" height="105"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="03:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XJE-F1-8Sy">
+                                <rect key="frame" x="125" y="167" width="66" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans-BoldItalic" family="Gill Sans" pointSize="20"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="unlock_move_level20.png" id="slU-4b-pRc">
+                                <rect key="frame" x="37" y="206" width="240" height="90"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lastsave_question.png" id="lTf-e4-d4e">
+                                <rect key="frame" x="37" y="187" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Wkt-x8-ugX">
+                                <rect key="frame" x="162" y="257" width="60" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="22"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="deny_btn.png" id="Uzl-hR-iaq">
+                                <rect key="frame" x="67" y="285" width="64" height="64"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="accept_btn.png" id="ib4-pG-0sv">
+                                <rect key="frame" x="192" y="285" width="64" height="64"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="e9h-Xf-Lat"/>
                     <connections>
+                        <outlet property="acceptLastSaveView" destination="ib4-pG-0sv" id="xPc-3o-gFs"/>
                         <outlet property="bonusLabel" destination="RhT-rW-DmC" id="Wy2-Qb-IQB"/>
                         <outlet property="bonusView" destination="eue-KF-mGa" id="vTe-Ao-JNM"/>
                         <outlet property="boosterImage" destination="jsA-ie-HTf" id="010-Tt-jCI"/>
                         <outlet property="coolMoveView" destination="7Jg-Sm-Roc" id="Xnr-y9-lcH"/>
+                        <outlet property="denyLastSaveView" destination="Uzl-hR-iaq" id="EHc-Hm-fuC"/>
                         <outlet property="facebookIcon" destination="eo4-dJ-YpU" id="ezb-gE-rGm"/>
                         <outlet property="gameOverBestScoreLabel" destination="VG2-xl-BdT" id="p9F-lr-vf0"/>
                         <outlet property="gameOverPanel" destination="TuL-Df-D2l" id="N41-cA-InZ"/>
                         <outlet property="gameOverScoreLabel" destination="KPe-Ii-meF" id="9Y2-Nu-Alz"/>
                         <outlet property="jellyStarsLabel" destination="qvF-zo-WNu" id="kMq-nc-pcR"/>
                         <outlet property="jellyStarsView" destination="4jf-me-4x7" id="qoT-bK-Zkr"/>
+                        <outlet property="lastSaveLabel" destination="Wkt-x8-ugX" id="SoB-Fw-VVN"/>
+                        <outlet property="lastSaveView" destination="lTf-e4-d4e" id="ura-HS-byC"/>
                         <outlet property="leaderboardIcon" destination="x0q-Vj-7eQ" id="Y37-Vs-mie"/>
                         <outlet property="levelLabel" destination="4MV-oJ-Qqg" id="TcN-XH-Wq7"/>
                         <outlet property="movesLabel" destination="1ls-qb-pYa" id="cTi-5s-3tl"/>
@@ -194,10 +232,13 @@
                         <outlet property="replayButton" destination="YIV-3d-1me" id="iEm-rt-XWl"/>
                         <outlet property="scoreLabel" destination="23A-mi-aPc" id="oEv-92-XjZ"/>
                         <outlet property="shareAndWinView" destination="PYR-bv-8Sm" id="ETF-LP-cqe"/>
+                        <outlet property="shareToPlayOrWaitView" destination="bot-rJ-XO4" id="qgS-ju-xu9"/>
                         <outlet property="shuffleButton" destination="X2A-u5-c2C" id="U91-5l-TFK"/>
                         <outlet property="sideMenu" destination="zcc-Hl-hL8" id="UIb-ge-Rpp"/>
                         <outlet property="targetLabel" destination="DEW-gM-Sah" id="yyd-Rh-jvF"/>
                         <outlet property="twitterIcon" destination="clz-He-oNU" id="Atp-5U-qvF"/>
+                        <outlet property="unlockMoveLevel20View" destination="slU-4b-pRc" id="cQk-hr-3XK"/>
+                        <outlet property="waitToPlayTimerLabel" destination="XJE-F1-8Sy" id="suG-yX-xTP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="btX-cZ-eVz" sceneMemberID="firstResponder"/>
@@ -610,11 +651,14 @@
         <image name="99cents.png" width="138" height="54"/>
         <image name="GameOver" width="212" height="120"/>
         <image name="Lock32.png" width="32" height="32"/>
+        <image name="accept_btn.png" width="73" height="75"/>
         <image name="blue_candy_anim_01.png" width="32" height="36"/>
         <image name="dark_b_jelly_01.png" width="32" height="36"/>
+        <image name="deny_btn.png" width="73" height="75"/>
         <image name="facebook.png" width="73" height="75"/>
         <image name="green_candy_anim_01.png" width="32" height="36"/>
         <image name="help.png" width="73" height="75"/>
+        <image name="lastsave_question.png" width="370" height="213"/>
         <image name="leaderboard.png" width="73" height="75"/>
         <image name="moves.png" width="210" height="68"/>
         <image name="musicoff.png" width="48" height="48"/>
@@ -623,6 +667,7 @@
         <image name="purple_candy_anim_01.png" width="32" height="36"/>
         <image name="red_candy_anim_01.png" width="32" height="36"/>
         <image name="replay.png" width="73" height="75"/>
+        <image name="share_twitter_or_wait.png" width="344" height="110"/>
         <image name="shareandwin.png" width="344" height="110"/>
         <image name="shuffle.png" width="214" height="72"/>
         <image name="starpoints.png" width="203" height="71"/>
@@ -632,6 +677,7 @@
         <image name="supercool.png" width="429" height="109"/>
         <image name="target.png" width="210" height="68"/>
         <image name="twitter.png" width="73" height="75"/>
+        <image name="unlock_move_level20.png" width="485" height="104"/>
         <image name="yellow_candy_anim_01.png" width="32" height="36"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

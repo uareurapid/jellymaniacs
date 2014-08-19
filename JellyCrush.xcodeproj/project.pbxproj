@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		7201EE77198302E800B50F7A /* moves.png in Resources */ = {isa = PBXBuildFile; fileRef = 7201EE76198302E800B50F7A /* moves.png */; };
+		7202966319A3F192005BD0FD /* lastsave_question.png in Resources */ = {isa = PBXBuildFile; fileRef = 7202966219A3F192005BD0FD /* lastsave_question.png */; };
+		7202966619A3F1A7005BD0FD /* accept_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 7202966419A3F1A7005BD0FD /* accept_btn.png */; };
+		7202966719A3F1A7005BD0FD /* deny_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 7202966519A3F1A7005BD0FD /* deny_btn.png */; };
 		72145B20199FB93200083201 /* libAppLovinSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 72145B1F199FB93200083201 /* libAppLovinSdk.a */; };
 		72145B34199FB96500083201 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72145B33199FB96500083201 /* CoreTelephony.framework */; };
 		72145B36199FB97000083201 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72145B35199FB97000083201 /* CoreMedia.framework */; };
@@ -149,6 +152,8 @@
 		723894B51967153900411F7E /* Level_99.json in Resources */ = {isa = PBXBuildFile; fileRef = 723894551967153900411F7E /* Level_99.json */; };
 		723894B61967153900411F7E /* Level_100.json in Resources */ = {isa = PBXBuildFile; fileRef = 723894561967153900411F7E /* Level_100.json */; };
 		7256ED5819830B29007B1BB0 /* target.png in Resources */ = {isa = PBXBuildFile; fileRef = 7256ED5719830B29007B1BB0 /* target.png */; };
+		72667DBC19A38AD300C84AC5 /* share_twitter_or_wait.png in Resources */ = {isa = PBXBuildFile; fileRef = 72667DBB19A38AD200C84AC5 /* share_twitter_or_wait.png */; };
+		72667DC019A3BEDA00C84AC5 /* unlock_move_level20.png in Resources */ = {isa = PBXBuildFile; fileRef = 72667DBF19A3BEDA00C84AC5 /* unlock_move_level20.png */; };
 		7272F3EC196C7B5900E2419A /* bg_dirt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7272F3EB196C7B5900E2419A /* bg_dirt@2x.png */; };
 		7272F3EE196C7B6200E2419A /* bg_dirt.png in Resources */ = {isa = PBXBuildFile; fileRef = 7272F3ED196C7B6200E2419A /* bg_dirt.png */; };
 		7285CE671982DD1C0063BAC2 /* 99cents.png in Resources */ = {isa = PBXBuildFile; fileRef = 7285CE631982DD1C0063BAC2 /* 99cents.png */; };
@@ -354,6 +359,9 @@
 
 /* Begin PBXFileReference section */
 		7201EE76198302E800B50F7A /* moves.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = moves.png; sourceTree = "<group>"; };
+		7202966219A3F192005BD0FD /* lastsave_question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lastsave_question.png; sourceTree = "<group>"; };
+		7202966419A3F1A7005BD0FD /* accept_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = accept_btn.png; sourceTree = "<group>"; };
+		7202966519A3F1A7005BD0FD /* deny_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deny_btn.png; sourceTree = "<group>"; };
 		72145B1F199FB93200083201 /* libAppLovinSdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libAppLovinSdk.a; sourceTree = "<group>"; };
 		72145B22199FB94100083201 /* ALAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALAd.h; sourceTree = "<group>"; };
 		72145B23199FB94100083201 /* ALAdDisplayDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALAdDisplayDelegate.h; sourceTree = "<group>"; };
@@ -520,6 +528,8 @@
 		723894551967153900411F7E /* Level_99.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Level_99.json; sourceTree = "<group>"; };
 		723894561967153900411F7E /* Level_100.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Level_100.json; sourceTree = "<group>"; };
 		7256ED5719830B29007B1BB0 /* target.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = target.png; sourceTree = "<group>"; };
+		72667DBB19A38AD200C84AC5 /* share_twitter_or_wait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_twitter_or_wait.png; sourceTree = "<group>"; };
+		72667DBF19A3BEDA00C84AC5 /* unlock_move_level20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unlock_move_level20.png; sourceTree = "<group>"; };
 		7272F3EB196C7B5900E2419A /* bg_dirt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_dirt@2x.png"; sourceTree = "<group>"; };
 		7272F3ED196C7B6200E2419A /* bg_dirt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_dirt.png; sourceTree = "<group>"; };
 		7285CE631982DD1C0063BAC2 /* 99cents.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 99cents.png; sourceTree = "<group>"; };
@@ -880,9 +890,13 @@
 				728CD9E41987165600B65B3B /* blue_candy_anim_01.png */,
 				722F477019A27FB600B1E5C4 /* musicoff.png */,
 				722F477119A27FB600B1E5C4 /* musicon.png */,
+				72667DBB19A38AD200C84AC5 /* share_twitter_or_wait.png */,
+				7202966219A3F192005BD0FD /* lastsave_question.png */,
 				729BEE9819A2BB9E0069760C /* shareandwin.png */,
 				722F476C19A25E1500B1E5C4 /* needhelp~ipad.png */,
 				722F476D19A25E1500B1E5C4 /* needhelp~iphone.png */,
+				7202966419A3F1A7005BD0FD /* accept_btn.png */,
+				7202966519A3F1A7005BD0FD /* deny_btn.png */,
 				728CD9E51987165600B65B3B /* blue_candy_anim_01@~ipad.png */,
 				722987631996DA43002475E8 /* beach.jpg */,
 				722987651996DB01002475E8 /* dunes.jpg */,
@@ -890,6 +904,7 @@
 				722E22D11997BC13007698D6 /* jellymaniac.png */,
 				722E22D21997BC13007698D6 /* supercool.png */,
 				72145B46199FD8C500083201 /* grass-and-the-sky-background.jpg */,
+				72667DBF19A3BEDA00C84AC5 /* unlock_move_level20.png */,
 				72145B47199FD8C500083201 /* Pause@2x~ipad.png */,
 				72145B48199FD8C500083201 /* Pause@2x~iphone.png */,
 				72145B49199FD8C500083201 /* Pause~ipad.png */,
@@ -1476,6 +1491,7 @@
 				723894731967153900411F7E /* Level_33.json in Resources */,
 				7238945A1967153900411F7E /* Level_8.json in Resources */,
 				728CDA541987165600B65B3B /* background_01.png in Resources */,
+				7202966719A3F1A7005BD0FD /* deny_btn.png in Resources */,
 				728CDAB51987165600B65B3B /* yellow_candy_anim_01.png in Resources */,
 				722F475A19A223C900B1E5C4 /* iuu.m4a in Resources */,
 				728CDA701987165600B65B3B /* dark_b_jelly_03@2x~ipad.png in Resources */,
@@ -1528,6 +1544,7 @@
 				7285CE6C1982E45C0063BAC2 /* points.png in Resources */,
 				723894AC1967153900411F7E /* Level_90.json in Resources */,
 				722E22D51997BC13007698D6 /* supercool.png in Resources */,
+				72667DBC19A38AD300C84AC5 /* share_twitter_or_wait.png in Resources */,
 				728CDAB71987165600B65B3B /* yellow_candy_anim_01@2x.png in Resources */,
 				728CDAAD1987165600B65B3B /* red_candy_anim_03.png in Resources */,
 				7BDB64EA18BDE7A0006B3B02 /* Level_2.json in Resources */,
@@ -1576,6 +1593,7 @@
 				729371111981BE1700DE4254 /* help.png in Resources */,
 				723894671967153900411F7E /* Level_21.json in Resources */,
 				723894A01967153900411F7E /* Level_78.json in Resources */,
+				72667DC019A3BEDA00C84AC5 /* unlock_move_level20.png in Resources */,
 				729371141981C98500DE4254 /* forward.png in Resources */,
 				728CDA891987165600B65B3B /* green_candy_anim_02.png in Resources */,
 				7238949B1967153900411F7E /* Level_73.json in Resources */,
@@ -1584,6 +1602,7 @@
 				728CDAAE1987165600B65B3B /* red_candy_anim_03@~ipad.png in Resources */,
 				728CDA6D1987165600B65B3B /* dark_b_jelly_03.png in Resources */,
 				728CDAB91987165600B65B3B /* yellow_candy_anim_02.png in Resources */,
+				7202966319A3F192005BD0FD /* lastsave_question.png in Resources */,
 				723894581967153900411F7E /* Level_6.json in Resources */,
 				728CDA761987165600B65B3B /* dark_v_jelly_01@~ipad.png in Resources */,
 				723894A71967153900411F7E /* Level_85.json in Resources */,
@@ -1635,6 +1654,7 @@
 				728CDA5D1987165600B65B3B /* blue_candy_anim_03.png in Resources */,
 				728CDAA61987165600B65B3B /* red_candy_anim_01@2x~ipad.png in Resources */,
 				72E45B55198C70AA00187B88 /* spark.png in Resources */,
+				7202966619A3F1A7005BD0FD /* accept_btn.png in Resources */,
 				728CDAA21987165600B65B3B /* purple_candy_anim_04@~ipad.png in Resources */,
 				7238945C1967153900411F7E /* Level_10.json in Resources */,
 				728CDABE1987165600B65B3B /* yellow_candy_anim_03@~ipad.png in Resources */,

@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CookieCrunch/ViewController.m"
-            timestampString = "430095742.15513"
+            timestampString = "430181693.999182"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "525"
-            endingLineNumber = "525"
-            landmarkName = "-beginGame:"
+            startingLineNumber = "744"
+            endingLineNumber = "744"
+            landmarkName = "-supportedInterfaceOrientations"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -76,11 +76,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CookieCrunch/ViewController.m"
-            timestampString = "430095742.15513"
+            timestampString = "430178643.677732"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "145"
-            endingLineNumber = "145"
+            startingLineNumber = "157"
+            endingLineNumber = "157"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>

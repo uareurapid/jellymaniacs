@@ -43,6 +43,19 @@
         [(VirtualCurrency*)[storeAssets.virtualCurrencies objectAtIndex:0] giveAmount:1000];
     }
     
+    //if the key doesn´t exist yet, set the value to 1;
+    if (![defaults integerForKey:NUM_JELLY_PLAYS_KEY])
+    {
+        [defaults setInteger:1 forKey:NUM_JELLY_PLAYS_KEY];
+    }
+    
+    //if the key doesn´t exist yet, set the value to 1;
+    if (![defaults integerForKey:SHARED_FACEBOOK_KEY])
+    {
+        [defaults setInteger:0 forKey:SHARED_FACEBOOK_KEY];
+    }
+    
+    
     //test
 #ifdef DEBUG_RUN
     [(VirtualCurrency*)[storeAssets.virtualCurrencies objectAtIndex:0] giveAmount:1000];
@@ -65,6 +78,12 @@
     if (![defaults integerForKey:NUM_PURCHASED_MOVES_KEY])
     {
         [defaults setInteger:NUM_PURCHASED_MOVES forKey:NUM_PURCHASED_MOVES_KEY];
+    }
+    
+    //last saved game is level 1
+    if (![defaults integerForKey:LAST_SAVE_KEY])
+    {
+        [defaults setInteger:1 forKey:LAST_SAVE_KEY];
     }
     
     //initialize applovin sdk
