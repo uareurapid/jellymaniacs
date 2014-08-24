@@ -42,6 +42,7 @@
 - (void)playAwesomeMoveSound;
 - (void)playJellyManiacSound;
 - (void)playPassLevelSound;
+- (void)playGameOverSound;
 
 - (NSTimeInterval)getPlayerSleepingTime;
 - (void)resetSleepingTimer;

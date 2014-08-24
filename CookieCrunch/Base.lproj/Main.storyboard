@@ -22,12 +22,12 @@
                                 <size key="shadowOffset" width="0.0" height="1"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="facebook.png" id="eo4-dJ-YpU" userLabel="Image View - facebook.png">
-                                <rect key="frame" x="84" y="329" width="64" height="64"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <rect key="frame" x="84" y="334" width="64" height="64"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="twitter.png" id="clz-He-oNU" userLabel="Image View - twitter.png">
-                                <rect key="frame" x="170" y="329" width="64" height="64"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <rect key="frame" x="170" y="334" width="64" height="64"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GameOver" id="TuL-Df-D2l">
                                 <rect key="frame" x="0.0" y="187" width="320" height="196"/>
@@ -82,7 +82,7 @@
                                 <size key="shadowOffset" width="0.0" height="1"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Level" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="4MV-oJ-Qqg">
-                                <rect key="frame" x="12" y="9" width="115" height="18"/>
+                                <rect key="frame" x="10" y="9" width="125" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="GillSans-Bold" family="Gill Sans" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -124,7 +124,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="blue_candy_anim_01.png" id="jsA-ie-HTf">
-                                <rect key="frame" x="126" y="505" width="40" height="43"/>
+                                <rect key="frame" x="133" y="505" width="40" height="43"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </imageView>
                             <view contentMode="scaleToFill" id="eue-KF-mGa">
@@ -164,23 +164,24 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="musicoff.png" id="JFp-2i-Y7N">
-                                <rect key="frame" x="261" y="500" width="48" height="48"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <rect key="frame" x="261" y="501" width="48" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shareandwin.png" id="PYR-bv-8Sm">
-                                <rect key="frame" x="62" y="410" width="200" height="100"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <rect key="frame" x="62" y="395" width="200" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="share_twitter_or_wait.png" id="bot-rJ-XO4">
-                                <rect key="frame" x="37" y="109" width="240" height="105"/>
+                                <rect key="frame" x="37" y="95" width="240" height="105"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="03:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XJE-F1-8Sy">
-                                <rect key="frame" x="125" y="167" width="66" height="36"/>
+                                <rect key="frame" x="125" y="152" width="66" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="GillSans-BoldItalic" family="Gill Sans" pointSize="20"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
+                                <color key="shadowColor" cocoaTouchSystemColor="darkTextColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="unlock_move_level20.png" id="slU-4b-pRc">
                                 <rect key="frame" x="37" y="206" width="240" height="90"/>
@@ -279,13 +280,6 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+5 Moves" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Arj-Jm-tCg">
-                                            <rect key="frame" x="5" y="5" width="127" height="44"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" name="ChalkboardSE-Regular" family="Chalkboard SE" pointSize="20"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="nNH-4i-Dlk">
                                             <rect key="frame" x="170" y="5" width="93" height="44"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
@@ -293,6 +287,10 @@
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                         </button>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="buy5moves.png" id="dH2-eB-6Yz">
+                                            <rect key="frame" x="3" y="7" width="120" height="40"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -304,13 +302,6 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+10 Moves" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="F9s-Rp-BY6">
-                                            <rect key="frame" x="5" y="5" width="127" height="44"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" name="ChalkboardSE-Regular" family="Chalkboard SE" pointSize="20"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="O8u-0y-2L3">
                                             <rect key="frame" x="170" y="5" width="93" height="44"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
@@ -318,6 +309,10 @@
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                         </button>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="buy10moves.png" id="Oe4-eS-3if">
+                                            <rect key="frame" x="3" y="7" width="120" height="40"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
                                     </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -328,26 +323,45 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+10 Levels" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1aF-J3-hRj">
-                                            <rect key="frame" x="5" y="5" width="127" height="44"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" name="ChalkboardSE-Regular" family="Chalkboard SE" pointSize="20"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="yon-cw-sfs">
+                                            <rect key="frame" x="170" y="5" width="93" height="44"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" backgroundImage="199cents.png">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                        </button>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="buy10levels.png" id="feL-XG-dNc">
+                                            <rect key="frame" x="3" y="7" width="120" height="40"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="levels25" rowHeight="60" id="KrC-6i-ku8" customClass="MyStoreTableViewCell">
+                                <rect key="frame" x="0.0" y="202" width="320" height="60"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KrC-6i-ku8" id="ak6-2m-Y85">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="1E0-vq-MYt">
                                             <rect key="frame" x="170" y="5" width="93" height="44"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" backgroundImage="299cents.png">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                         </button>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="buy25levels.png" id="IQ9-ni-g2k">
+                                            <rect key="frame" x="3" y="7" width="120" height="40"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="smash" rowHeight="60" id="kMK-yc-CYG" customClass="MyStoreTableViewCell">
-                                <rect key="frame" x="0.0" y="202" width="320" height="60"/>
+                                <rect key="frame" x="0.0" y="262" width="320" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kMK-yc-CYG" id="4nj-7N-vKk">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
@@ -383,7 +397,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="dark" rowHeight="60" id="zIj-2O-ybn" customClass="MyStoreTableViewCell">
-                                <rect key="frame" x="0.0" y="262" width="320" height="60"/>
+                                <rect key="frame" x="0.0" y="322" width="320" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zIj-2O-ybn" id="3uz-tK-1Z3">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
@@ -419,7 +433,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="blue" rowHeight="60" id="HCM-V0-m0G" customClass="MyStoreTableViewCell">
-                                <rect key="frame" x="0.0" y="322" width="320" height="60"/>
+                                <rect key="frame" x="0.0" y="382" width="320" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HCM-V0-m0G" id="u10-hG-Q7C">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
@@ -455,7 +469,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="green" rowHeight="60" id="Xrj-qd-cgB" customClass="MyStoreTableViewCell">
-                                <rect key="frame" x="0.0" y="382" width="320" height="60"/>
+                                <rect key="frame" x="0.0" y="442" width="320" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Xrj-qd-cgB" id="SO1-KL-Ue0">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
@@ -491,7 +505,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="yellow" rowHeight="60" id="u3y-Oy-nEk" customClass="MyStoreTableViewCell">
-                                <rect key="frame" x="0.0" y="442" width="320" height="60"/>
+                                <rect key="frame" x="0.0" y="502" width="320" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="u3y-Oy-nEk" id="J4i-LF-WQS">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
@@ -527,7 +541,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="red" rowHeight="60" id="F2t-wN-RK2" customClass="MyStoreTableViewCell">
-                                <rect key="frame" x="0.0" y="502" width="320" height="60"/>
+                                <rect key="frame" x="0.0" y="562" width="320" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="F2t-wN-RK2" id="AGE-u2-ENQ">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
@@ -563,7 +577,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="pink" rowHeight="60" id="4jp-mD-QhW" userLabel="Table View Cell - pink" customClass="MyStoreTableViewCell">
-                                <rect key="frame" x="0.0" y="562" width="320" height="60"/>
+                                <rect key="frame" x="0.0" y="622" width="320" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4jp-mD-QhW" id="LUl-ta-LIO">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
@@ -599,19 +613,16 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="restore" rowHeight="60" id="JTs-vG-dMk" userLabel="Table View Cell - pink" customClass="MyStoreTableViewCell">
-                                <rect key="frame" x="0.0" y="622" width="320" height="60"/>
+                                <rect key="frame" x="0.0" y="682" width="320" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JTs-vG-dMk" id="Bu0-c0-jA5">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Restore Purchases" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2UR-lD-ILC">
-                                            <rect key="frame" x="5" y="5" width="190" height="44"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" name="ChalkboardSE-Regular" family="Chalkboard SE" pointSize="20"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="restorepurchases.png" id="bEM-Ry-BhQ">
+                                            <rect key="frame" x="3" y="7" width="120" height="40"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -653,6 +664,10 @@
         <image name="Lock32.png" width="32" height="32"/>
         <image name="accept_btn.png" width="73" height="75"/>
         <image name="blue_candy_anim_01.png" width="32" height="36"/>
+        <image name="buy10levels.png" width="214" height="72"/>
+        <image name="buy10moves.png" width="214" height="72"/>
+        <image name="buy25levels.png" width="214" height="72"/>
+        <image name="buy5moves.png" width="214" height="72"/>
         <image name="dark_b_jelly_01.png" width="32" height="36"/>
         <image name="deny_btn.png" width="73" height="75"/>
         <image name="facebook.png" width="73" height="75"/>
@@ -667,6 +682,7 @@
         <image name="purple_candy_anim_01.png" width="32" height="36"/>
         <image name="red_candy_anim_01.png" width="32" height="36"/>
         <image name="replay.png" width="73" height="75"/>
+        <image name="restorepurchases.png" width="214" height="72"/>
         <image name="share_twitter_or_wait.png" width="344" height="110"/>
         <image name="shareandwin.png" width="344" height="110"/>
         <image name="shuffle.png" width="214" height="72"/>

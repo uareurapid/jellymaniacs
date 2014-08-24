@@ -1,9 +1,9 @@
 //
 //  ViewController.m
-//  CookieCrunch
+//  JellyCrush
 //
-//  Created by Matthijs on 25-02-14.
-//  Copyright (c) 2014 Razeware LLC. All rights reserved.
+//  Created by Paulo Cristo on 23/07/14.
+//  Copyright (c) 2014 PC Dreams Software. All rights reserved.
 //
 
 @import AVFoundation;
@@ -22,6 +22,7 @@
 #import "GameCenterManager.h"
 
 
+
 @interface ViewController ()
 
 // The level contains the tiles, the cookies, and most of the gameplay logic.
@@ -29,7 +30,6 @@
 
 // The scene draws the tiles and cookie sprites, and handles swipes.
 @property (strong, nonatomic) MyScene *scene;
-
 @property (assign, nonatomic) NSUInteger currentLevel;
 @property (strong, nonatomic) IBOutlet UIImageView *shareAndWinView;
 @property (strong, nonatomic) IBOutlet UIImageView *shareToPlayOrWaitView;
@@ -107,6 +107,9 @@
 @property NSUInteger waitToPlayTimer;
 @property NSTimer *waitTimer;
 
+@property NSTimer *helperTimer;
+@property BOOL startFromLastSave;
+
 - (IBAction) showLeaderboard;
 - (IBAction) submitScore;
 
@@ -131,6 +134,7 @@
     
     self.facebookIcon.hidden = true;
     self.twitterIcon.hidden = true;
+    self.startFromLastSave = false;
     
    //now do the proper check
     [self checkSocialServicesAvailability];
@@ -148,105 +152,54 @@
     self.bonusView.hidden = true;
     self.coolMoveView.hidden = true;
     self.needHelpImageView.hidden = true;
+    self.boosterImage.hidden = true;
     
     
- [self.navigationController setNavigationBarHidden:YES animated:YES];
-  // Configure the view.
-  SKView *skView = (SKView *)self.view;
-  skView.multipleTouchEnabled = NO;
-  
-  // Create and configure the scene.
-  self.scene = [MyScene sceneWithSize:skView.bounds.size];
-  self.scene.scaleMode = SKSceneScaleModeAspectFill;
-    
-
-    
-   [self initHelperGoods];
-   [self setupBoosterTouch];
-   
-    
-   //set notifications, for when a booster was used on the scene
-    [[NSNotificationCenter defaultCenter] addObserver:self
-     selector:@selector(reportBoosterAction:)
-     name:@"ReportBoosterInPlace"
-     object:nil];
-
-    //setup music, on by default
-    [self setupMusicSettingsTouch];
-    
-   //setup game center
-    [self setupGameCenter];
+   [self.navigationController setNavigationBarHidden:YES animated:YES];
     
     
-  // Load the level.
-
-  self.currentLevel = 1;
-  self.overallScore = 0;
-  self.level = [[PCLevel alloc] initWithFile: [NSString stringWithFormat:@"Level_%lu",(unsigned long)self.currentLevel-1]];
-  self.scene.level = self.level;
-
-
-  [self.scene addTiles];
     
-  //share to facebook and win 500 stars
-  self.shareAndWinView.hidden = true;
-  //every 10 plays i show the share to twitter
-  self.shareToPlayOrWaitView.hidden = true;
-  self.waitToPlayTimerLabel.hidden = true;
     
-
-  // This is the swipe handler. MyScene invokes this block whenever it
-  // detects that the player performs a swipe.
-  id block = ^(PCSwap *swap) {
-
-    // While cookies are being matched and new cookies fall down to fill up
-    // the holes, we don't want the player to tap on anything.
-    self.view.userInteractionEnabled = NO;
-
-    if ([self.level isPossibleSwap:swap]) {
-      [self.level performSwap:swap];
-      [self.scene animateSwap:swap completion:^{
-        [self handleMatches];
-      }];
-    } else {
-      [self.scene animateInvalidSwap:swap completion:^{
-        self.view.userInteractionEnabled = YES;
-      }];
-    }
-  };
-
-  self.scene.swipeHandler = block;
-
-  // Hide the game over panel from the screen.
-  self.gameOverPanel.hidden = YES;
-  [self.gameOverBestScoreLabel setHidden:true];
-  [self.gameOverScoreLabel setHidden:true];
-  
-  // Present the scene.
-  [skView presentScene:self.scene];
-
-  // Load and start background music.
-  NSURL *url = [[NSBundle mainBundle] URLForResource:@"Gonna Start v2" withExtension:@"mp3"];//Mining by Moonlight
-  self.backgroundMusic = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
-  self.backgroundMusic.numberOfLoops = -1;
-  [self.backgroundMusic play];
+  //***************************
     
-  //show this
-  self.unlockMoveLevel20View.hidden = false;
+   //section 1, configure scene
+    self.currentLevel = 1;
+    self.overallScore = 0;
+    self.levelScore = 0;
+    
+    
+  //***************************
+    
+   //share to facebook and win 500 stars
+   self.shareAndWinView.hidden = true;
+   //every 10 plays i show the share to twitter
+   self.shareToPlayOrWaitView.hidden = true;
+   self.waitToPlayTimerLabel.hidden = true;
     
 
-  
+  //*******************************
+    
+    //section 2 configure the scene
+    
+    // Hide the game over panel from the screen.
+    self.gameOverPanel.hidden = YES;
+    [self.gameOverBestScoreLabel setHidden:true];
+    [self.gameOverScoreLabel setHidden:true];
+    
+   //*******************************
+    
+   //show this
+   self.unlockMoveLevel20View.hidden = false;
+
     
     NSUInteger lastSavedLevel = [self checkLastSaves];
     self.currentLevel = lastSavedLevel;
     
-    
-    
     if(lastSavedLevel>1) {
-        
+
         [self setupLastSaveAcceptTouch];
         [self setupLastSaveDenyTouch];
-        
+            
         self.unlockMoveLevel20View.hidden = true;
         self.lastSaveLabel.hidden = false;
         self.lastSaveView.hidden = false;
@@ -255,8 +208,15 @@
         self.shuffleButton.hidden = true;
         self.sideMenu.hidden = true;
         self.lastSaveLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)self.currentLevel];
+            
+        self.targetLabel.hidden = true;
+        self.levelLabel.hidden = true;
+        self.scoreLabel.hidden = true;
+        self.movesLabel.hidden = true;
+        self.musicSettingView.hidden = true;
         
-        NSLog(@"still see me");
+        
+        
     }
     else {
         self.unlockMoveLevel20View.hidden = false;
@@ -265,16 +225,97 @@
         self.acceptLastSaveView.hidden = true;
         self.denyLastSaveView.hidden = true;
         // Let's start the game!
+        
+        [self configureGameScene];
         [self beginGame: false];
     }
     
-    [NSTimer scheduledTimerWithTimeInterval:3.0  target:self
-                                   selector:@selector(showHideNeedHelpView)
-                                   userInfo:nil
-                                    repeats:YES];
+    //TODO USE if(self.isTwitterAvailable
+    //&& [self getNumberOfPlays]>MAX_PLAYS_WITHOUT_SHARE
+    //&& ![self alreadySharedToTwitter]) {
+        
+    //    [self configureTwitterShareWaitBeforePlay];
+    //}
 
   
 }
+
+-(void) configureGameScene {
+    
+    //******* SECTION 1 **************
+    // Configure the view.
+    SKView *skView = (SKView *)self.view;
+    skView.multipleTouchEnabled = NO;
+    
+    // Create and configure the scene.
+    self.scene = [MyScene sceneWithSize:skView.bounds.size];
+    self.scene.scaleMode = SKSceneScaleModeAspectFill;
+    
+    self.musicSettingView.hidden = false;
+    
+    [self initHelperGoods];
+    [self setupBoosterTouch];
+    
+    
+    //set notifications, for when a booster was used on the scene
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reportBoosterAction:)
+                                                 name:@"ReportBoosterInPlace"
+                                               object:nil];
+    
+    //setup music, on by default
+    [self setupMusicSettingsTouch];
+    
+    //setup game center
+    [self setupGameCenter];
+    
+    
+    self.level = [[PCLevel alloc] initWithFile: [NSString stringWithFormat:@"Level_%lu",(unsigned long)self.currentLevel-1]];
+    self.scene.level = self.level;
+    
+    //configure moves and target
+    [self configureMovesAndTarget];
+    
+    [self.scene addTiles];
+    
+    
+    //************* SECTION 2 *********
+    // This is the swipe handler. MyScene invokes this block whenever it
+    // detects that the player performs a swipe.
+    id block = ^(PCSwap *swap) {
+        
+        // While cookies are being matched and new cookies fall down to fill up
+        // the holes, we don't want the player to tap on anything.
+        self.view.userInteractionEnabled = NO;
+        
+        if ([self.level isPossibleSwap:swap]) {
+            [self.level performSwap:swap];
+            [self.scene animateSwap:swap completion:^{
+                [self handleMatches];
+            }];
+        } else {
+            [self.scene animateInvalidSwap:swap completion:^{
+                self.view.userInteractionEnabled = YES;
+            }];
+        }
+    };
+    
+    self.scene.swipeHandler = block;
+    
+    
+    
+    // Present the scene.
+    [skView presentScene:self.scene];
+    
+    // Load and start background music.
+    NSURL *url = [[NSBundle mainBundle] URLForResource:@"Gonna Start v2" withExtension:@"mp3"];//Mining by Moonlight
+    self.backgroundMusic = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
+    self.backgroundMusic.numberOfLoops = -1;
+    [self.backgroundMusic play];
+    
+    
+}
+
 
 //check the last saved level
 -(NSUInteger) checkLastSaves {
@@ -300,21 +341,6 @@
     [self.boosterImage addGestureRecognizer:tapGesture];
 }
 
--(void)setupLastSaveAcceptTouch {
-    self.acceptLastSaveView.userInteractionEnabled = YES;
-    UITapGestureRecognizer *tapGesture =
-    [[UITapGestureRecognizer alloc]
-     initWithTarget:self action:@selector(didTapAcceptLastSaveWithGesture:)];
-    [self.acceptLastSaveView addGestureRecognizer:tapGesture];
-}
-
--(void)setupLastSaveDenyTouch {
-    self.denyLastSaveView.userInteractionEnabled = YES;
-    UITapGestureRecognizer *tapGesture =
-    [[UITapGestureRecognizer alloc]
-     initWithTarget:self action:@selector(didTapDenyLastSaveWithGesture:)];
-    [self.denyLastSaveView addGestureRecognizer:tapGesture];
-}
 
 -(void)setupShareToWinTouch {
     self.shareAndWinView.userInteractionEnabled = YES;
@@ -325,18 +351,60 @@
 
 }
 
-- (void)didTapAcceptLastSaveWithGesture:(UITapGestureRecognizer *)tapGesture {
+-(void)setupLastSaveAcceptTouch {
+    self.acceptLastSaveView.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapGesture =
+    [[UITapGestureRecognizer alloc]
+     initWithTarget:self action:@selector(didTapLastSaveAcceptWithGesture:)];
+    [self.acceptLastSaveView addGestureRecognizer:tapGesture];
     
-    self.shuffleButton.hidden = false;
-    self.sideMenu.hidden = false;
+}
+
+-(void)setupLastSaveDenyTouch {
+    self.denyLastSaveView.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapGesture =
+    [[UITapGestureRecognizer alloc]
+     initWithTarget:self action:@selector(didTapLastSaveDenyWithGesture:)];
+    [self.denyLastSaveView addGestureRecognizer:tapGesture];
+
+}
+
+- (void)didTapLastSaveAcceptWithGesture:(UITapGestureRecognizer *)tapGesture {
+    
+    self.startFromLastSave = true;
+    [self hideLastSaveChoicesView];
+    [self configureGameScene];
     [self beginGame:false];
 }
 
-- (void)didTapDenyLastSaveWithGesture:(UITapGestureRecognizer *)tapGesture {
+- (void)didTapLastSaveDenyWithGesture:(UITapGestureRecognizer *)tapGesture {
+    
+    self.startFromLastSave = false;
+    self.currentLevel = 1;
+    [self hideLastSaveChoicesView];
+    [self configureGameScene];
+    [self beginGame:false];
+}
+
+
+//hides the view and shows the game
+-(void) hideLastSaveChoicesView {
+    
     
     self.shuffleButton.hidden = false;
     self.sideMenu.hidden = false;
-    [self beginGame:false];
+    self.lastSaveView.hidden = true;
+    self.acceptLastSaveView.hidden = true;
+    self.denyLastSaveView.hidden = true;
+    self.lastSaveLabel.hidden=true;
+    
+    
+    self.targetLabel.hidden = false;
+    self.levelLabel.hidden = false;
+    self.scoreLabel.hidden = false;
+    self.movesLabel.hidden = false;
+    
+    
 }
 
 -(void)setupShareToPlayOrWaitTouch {
@@ -357,7 +425,7 @@
 //click on twitter or wait 03:00 to play
 - (void)didTapShareToPlayOrWaitWithGesture:(UITapGestureRecognizer *)tapGesture {
     self.shareToWinClicked = true;
-    [self sendToTwitter:self];
+    [self sendToTwitter:self message:NSLocalizedString(@"checkout_my_app", @"checkout_my_app")];
 }
 
 -(void) setWaitToPlayOrShareTimer {
@@ -367,14 +435,7 @@
     
     self.waitTimer = [NSTimer timerWithTimeInterval:1.0 target:self selector:@selector(updateTimer:) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:self.waitTimer forMode:NSRunLoopCommonModes];
-    
-    
-    
-    
-     //= [NSTimer scheduledTimerWithTimeInterval:1.0  target:self
-       //                                             selector:@selector(updateTimer:)
-         //                          userInfo:nil
-           //                         repeats:YES];
+ 
 }
 
 -(void)updateTimer: (NSTimer*)aTimer {
@@ -444,7 +505,7 @@
 //share to facebook and wind 500 stars
 - (void)didTapShareToWinWithGesture:(UITapGestureRecognizer *)tapGesture {
     self.shareToWinClicked = true;
-    [self sendToFacebook:self];
+    [self sendToFacebook:self message:NSLocalizedString(@"checkout_my_app", @"checkout_my_app")];
 }
 
 -(void)setupMusicSettingsTouch {
@@ -703,9 +764,12 @@
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     self.numMovesPurchased = [defaults integerForKey:NUM_PURCHASED_MOVES_KEY];
-    NSLog(@"moves purchased %d",self.numMovesPurchased);
     self.numLevelsPurchased = [defaults integerForKey:NUM_PURCHASED_LEVELS_KEY];
-    NSLog(@"levels purchased %d",self.numLevelsPurchased);
+
+}
+
+-(BOOL) hasMadeAnyPurchases {
+    return self.numMovesPurchased > NUM_PURCHASED_MOVES && self.numLevelsPurchased > NUM_PURCHASED_LEVELS;
 }
 
 -(NSUInteger) getNumAvailableLevels {
@@ -757,23 +821,26 @@
     
    NSLog(@"begin game: addTiles %@",addTiles==true?@"yes":@"no");
     
+    
+  if(self.helperTimer==nil) {
+    
+      //timer to show/hide the need help
+      //TODO this should be a member variable, and we should invalidate at game over
+      //and create a new one
+      self.helperTimer = [NSTimer scheduledTimerWithTimeInterval:3.0  target:self
+                                                        selector:@selector(showHideNeedHelpView)
+                                                        userInfo:nil
+                                                         repeats:YES];
+  }
+    
    self.levelScore = 0;
    self.shareAndWinView.hidden = true;
     //force load the next level
     if(self.level==nil) {
-        
+       
         self.level = [[PCLevel alloc] initWithFile: [NSString stringWithFormat:@"Level_%lu",(unsigned long)self.currentLevel-1]];
-        //always increase target in 10 points
-        if(self.currentLevel>1) {
-            self.level.targetScore = self.level.targetScore + (self.currentLevel * TARGET_INCREASE_BY_LEVEL); //level 100 will be 1000 + (100*10) = 2000
-            if(self.currentLevel>9) {
-                //reduce moves every 10 levels
-                NSUInteger restOverTenLevels = (NSUInteger)self.currentLevel%10;
-                self.level.maximumMoves = self.level.maximumMoves-restOverTenLevels;
-            }
-
-        }
-        
+        //configure proper number of moves and target score
+        [self configureMovesAndTarget];
 
         //add the level to the scene
         self.scene.level = self.level;
@@ -792,11 +859,19 @@
     if(addTiles) {
         [self.scene clearTiles];
         [self.scene addTiles];
-        //we change the background every 10 levels
-        if(self.currentLevel %10 ==0) {
-            [self.scene loadBackgroundForLevel:self.currentLevel];
-        }
+    }
+    //we change the background every 10 levels
+    if(self.currentLevel %10 ==0) {
+        [self.scene loadBackgroundForLevel:self.currentLevel];
+    }
+    else if(self.startFromLastSave && self.currentLevel>10) {
         
+        NSUInteger div = (unsigned long)self.currentLevel / 10;
+
+        //if 15 / 10 -> 1*10
+        //if 36 /10 -->3*10
+        //if 91/10 --> 9*10
+        [self.scene loadBackgroundForLevel:div*10];
     }
     
   [self updateLabels];
@@ -805,6 +880,30 @@
   [self.level resetComboMultiplier];
   [self.scene animateBeginGame];
   [self shuffle];
+
+    
+}
+
+//configures the proper number of moves and the level score
+-(void) configureMovesAndTarget {
+    //always increase target in 20 points
+    if(self.currentLevel>1) {
+        self.level.targetScore = self.level.targetScore + (self.currentLevel * TARGET_INCREASE_BY_LEVEL);
+        
+        //level 100 will be 1000 + (100*20 = 2000) = 3000
+
+          if(self.currentLevel>9) {
+              //reduce moves every 10 levels
+              NSUInteger difOverTenLevels = (NSUInteger)self.currentLevel/10;
+              self.level.maximumMoves = self.level.maximumMoves-difOverTenLevels;
+              //TODO CHECK AFTER LEVEL 101
+              //min allowed is 5 moves
+              if(self.level.maximumMoves < MIN_NUM_MOVES_LEVEL) {
+                  self.level.maximumMoves = MIN_NUM_MOVES_LEVEL;
+              }
+          }
+        
+    }
 }
 
 - (void)shuffle {
@@ -916,7 +1015,7 @@
   self.movesLabel.text = [NSString stringWithFormat:@"%lu", (long)self.movesLeft];
   self.scoreLabel.text = [NSString stringWithFormat:@"%lu", (long)self.levelScore];
   self.jellyStarsLabel.text = [NSString stringWithFormat:@"%d", [StoreInventory getItemBalance:JELLY_CURRENCY_ITEM_ID]];
-  self.levelLabel.text = [NSString stringWithFormat: @"%@: %lu / %lu", NSLocalizedString(@"level", @"level"), (long)self.currentLevel, [self getNumAvailableLevels]];
+  self.levelLabel.text = [NSString stringWithFormat: @"%@: %lu / %lu", NSLocalizedString(@"level", @"level"), (long)self.currentLevel, (unsigned long)self.numLevelsPurchased];
 }
 
 - (void)decrementMoves{
@@ -934,32 +1033,43 @@
       
   } else if (self.movesLeft == 0) {
       
-      //sum the level score
+      //sum the level score, to the previous (all levels before this, on same play)
       self.overallScore+=self.levelScore;
-      
   	  self.gameOverPanel.image = [UIImage imageNamed:@"GameOver"];
       
       
+      NSUInteger currentBestScore;
       //********************* CHECK SCORES *****************************/
       //check previous score, add first if not exists previous
       if (![[NSUserDefaults standardUserDefaults] valueForKey:@"jelly_score"]) {
           
           [[NSUserDefaults standardUserDefaults] setInteger:self.overallScore forKey:@"jelly_score"];
           //submit the score if first time
+          currentBestScore = self.overallScore;
           [self submitScore];
       }
-      
-      //get the best saved score
-      NSUInteger currentBestScore = [[NSUserDefaults standardUserDefaults]  integerForKey:@"jelly_score" ];
-      
-      //if current is new best, override it
-      if(self.overallScore > currentBestScore) {
-          //set is as best
-         [[NSUserDefaults standardUserDefaults] setInteger:self.overallScore forKey:@"jelly_score"];
-         //submit the new best
-         [self submitScore];
-         
+      else {
+          
+          //get the best saved score
+          currentBestScore = [[NSUserDefaults standardUserDefaults]  integerForKey:@"jelly_score" ];
+          
+          //if current is new best, override it
+          if(self.overallScore > currentBestScore) {
+              //set is as new best
+              [[NSUserDefaults standardUserDefaults] setInteger:self.overallScore forKey:@"jelly_score"];
+              //congrat
+              [[[[iToast makeText:NSLocalizedString(@"new_best_score", @"new_best_score")]
+                 setGravity:iToastGravityBottom] setDuration:1000] show];
+              
+              //and submit the new best (will open leaderboard too)
+              [self submitScore];
+              
+              currentBestScore = self.overallScore;
+              
+          }
       }
+      
+      
       
       //**************** SAVE LEVEL ************************************/
       if(self.currentLevel>1) {
@@ -989,7 +1099,6 @@
 - (void)showGameOver: (BOOL)autoAdvance bestScore:(NSUInteger) bestSavedScore  {
   [self.scene animateGameOver];
 
-    
   [self.gameOverScoreLabel setText:[NSString stringWithFormat: @"%lu",(unsigned long)self.overallScore ]];
   [self.gameOverBestScoreLabel setText: [NSString stringWithFormat: @"%lu",(unsigned long)bestSavedScore ]];
     
@@ -1006,6 +1115,9 @@
        self.needHelpImageView.hidden = YES;
        self.bonusView.hidden = false;
        self.replayButton.hidden = YES;
+        
+       self.musicSettingView.hidden=true;
+       self.boosterImage.hidden=true;
         
        self.bonusLabel.text = [NSString stringWithFormat:@"%@: %d",NSLocalizedString(@"you_won", @"you_won"), LEVEL_COMPLETION_BONUS_AMOUNT];
         
@@ -1074,7 +1186,7 @@
             //i can still buy more
             if(self.numLevelsPurchased < NUM_AVAILABLE_LEVELS) {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"no_more_levels", @"no_more_levels")
-                                                                message:NSLocalizedString(@"buy_10_levels", @"buy_10_levels")
+                                                                message:NSLocalizedString(@"buy_levels_generic", @"buy_levels_generic")
                                                                delegate:nil
                                                       cancelButtonTitle:@"OK"
                                                       otherButtonTitles:nil];
@@ -1098,18 +1210,21 @@
         }
         else {
             //show intertitial every 5 levels
-            if(self.currentLevel%5==0 && [ALInterstitialAd isReadyForDisplay]) {
+            if(![self hasMadeAnyPurchases] && self.currentLevel%5==0 && [ALInterstitialAd isReadyForDisplay]) {
                 //show interstitial
                 [ALInterstitialAd showOver:[[UIApplication sharedApplication] keyWindow]];
             }
             
-            //time to swicth musics
+            //time to switch musics
             if(self.currentLevel%10==0) {
                 NSURL *url = nil;
+                //if playing gonna start v2
                 if([self.backgroundMusic.url.relativeString rangeOfString:@"Gonna"].location != NSNotFound) {
+                    //play mining
                     url = [[NSBundle mainBundle] URLForResource:@"Mining by Moonlight" withExtension:@"mp3"];
                 }
                 else {
+                    //otherwise play gonna start
                     url = [[NSBundle mainBundle] URLForResource:@"Gonna Start v2" withExtension:@"mp3"];
                 }
                 //stop the music and allocate with new one
@@ -1131,6 +1246,11 @@
     else {//no autoadvance
         
         
+        if(self.helperTimer!=nil) {
+            [self.helperTimer invalidate];
+            self.helperTimer = nil;
+        }
+        
         //really is game over
         [self saveNumberOfPlays : [self getNumberOfPlays]+1];
         
@@ -1139,8 +1259,7 @@
             self.shareAndWinView.hidden = false;
         }
         
-        
-        
+        [self.scene playGameOverSound];
         
         
         //hide/show views
@@ -1240,6 +1359,11 @@
   self.gameOverScoreLabel.hidden = true;
   self.facebookIcon.hidden = YES;
   self.twitterIcon.hidden = YES;
+  
+//this is needed to update the booster image view
+  self.musicSettingView.hidden=false;
+  [self checkGoodsBalance];
+    
     
     
 }
@@ -1265,6 +1389,7 @@
     
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     return [defaults boolForKey:SHARED_TWITTER_KEY];
+    //will return false if not exists
  
     
 }
@@ -1272,11 +1397,36 @@
     
     //and if the key doesn´t exist yet
     
-    
+    self.overallScore = 0;
     
     if(self.isTwitterAvailable
        && [self getNumberOfPlays]>MAX_PLAYS_WITHOUT_SHARE
        && ![self alreadySharedToTwitter]) {
+        
+        [self configureTwitterShareWaitBeforePlay];
+        
+        
+    }
+    else {
+        self.waitToPlayTimer = 0;
+        self.shareToPlayOrWaitView.hidden = true;
+        self.waitToPlayTimerLabel.hidden = true;
+        //start from the last save, since is a replay
+        self.currentLevel = [self checkLastSaves];
+        
+    }
+    
+    //if the timer is zero
+    if(self.waitToPlayTimer==0) {
+        [self hideGameOver];
+    }
+    
+    
+}
+
+//configure twiiter share to be able to play
+-(void) configureTwitterShareWaitBeforePlay {
+    
         
         self.replayButton.userInteractionEnabled=NO;
         
@@ -1296,22 +1446,6 @@
         self.twitterIcon.hidden = YES;
         self.needHelpImageView.hidden = true;
         
-        
-    }
-    else {
-        self.waitToPlayTimer = 0;
-        self.shareToPlayOrWaitView.hidden = true;
-        self.waitToPlayTimerLabel.hidden = true;
-        //start from the last save, since is a replay
-        self.currentLevel = [self checkLastSaves];
-        
-    }
-    
-    //if the timer is zero
-    if(self.waitToPlayTimer==0) {
-        [self hideGameOver];
-    }
-    
     
 }
 
@@ -1353,30 +1487,36 @@
     
     
 }
-
+//share the score to facebook
 - (void)didTapFacebookWithGesture:(UITapGestureRecognizer *)tapGesture {
     
-    [self sendToFacebook:nil];
+    
+    [self sendToFacebook: self message: [NSString stringWithFormat: NSLocalizedString(@"checkout_my_score_%lu", @"checkout_my_score"),[self getBestScore]]];
 }
-
+//share the score to twitter
 - (void)didTapTwitterWithGesture:(UITapGestureRecognizer *)tapGesture {
     
-    [self sendToTwitter:nil];
+    [self sendToTwitter: self message: [NSString stringWithFormat: NSLocalizedString(@"checkout_my_score_%lu", @"checkout_my_score"),[self getBestScore]]];
 }
 
+//get the best score saved on settings
+-(NSUInteger) getBestScore {
+    NSUInteger currentBestScore = [[NSUserDefaults standardUserDefaults]  integerForKey:@"jelly_score" ];
+    return currentBestScore;
+}
 
 //will send the message to facebook
-- (IBAction)sendToFacebook:(id)sender {
+- (IBAction)sendToFacebook:(id)sender message:(NSString* )theMessage {
     
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
         
         SLComposeViewController *mySLComposerSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
         
-        [mySLComposerSheet setInitialText: [NSString stringWithFormat: @"Check my Jelly Maniacs score %lu",(unsigned long)self.levelScore] ];
+        [mySLComposerSheet setInitialText: theMessage];
         
         [mySLComposerSheet addImage:[UIImage imageNamed:@"blue_candy_anim_02"]];
         
-        //[mySLComposerSheet addURL:[NSURL URLWithString:@"https://itunes.apple.com/us/app/flapi-the-bird-fish/id837165900?ls=1&mt=8"]];
+        [mySLComposerSheet addURL:[NSURL URLWithString:@"https://itunes.apple.com/us/app/jelly-maniacs/id904072768?ls=1&mt=8"]];
         
         [mySLComposerSheet setCompletionHandler:^(SLComposeViewControllerResult result) {
             
@@ -1421,17 +1561,17 @@
 }
 
 //send the message also to twitter
-- (IBAction)sendToTwitter:(id)sender {
+- (IBAction)sendToTwitter:(id)sender message:(NSString* )theMessage {
     
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
         
         SLComposeViewController *mySLComposerSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
         
-        [mySLComposerSheet setInitialText: [NSString stringWithFormat: @"Check my Jelly Maniacs score %lu",(unsigned long)self.levelScore] ];
+        [mySLComposerSheet setInitialText: theMessage];
         
         [mySLComposerSheet addImage:[UIImage imageNamed:@"blue_candy_anim_02"]];
         
-        //[mySLComposerSheet addURL:[NSURL URLWithString:@"https://itunes.apple.com/us/app/flapi-the-bird-fish/id837165900?ls=1&mt=8"]];
+        [mySLComposerSheet addURL:[NSURL URLWithString:@"https://itunes.apple.com/us/app/jelly-maniacs/id904072768?ls=1&mt=8"]];
         
         [mySLComposerSheet setCompletionHandler:^(SLComposeViewControllerResult result) {
             
@@ -1440,12 +1580,15 @@
             switch (result) {
                 case SLComposeViewControllerResultCancelled:
                     msg = NSLocalizedString(@"twitter_post_canceled", @"twitter_post_canceled");
+                    self.shareToWinClicked = false;
                     break;
+                    
+                    
                 case SLComposeViewControllerResultDone:
-                    msg = NSLocalizedString(@"twitter_post_ok", @"twitter_post_ok");
+                    
                     
                     //this means we were locked on the share to play
-                    if(self.shareToPlayOrWaitView.hidden==NO) {
+                    if(self.shareToPlayOrWaitView.hidden==NO && self.shareToWinClicked) {
                         // Let's start the game!
                         
                         //reset the timer
@@ -1460,11 +1603,18 @@
                         self.currentLevel = [self checkLastSaves];
                         
                         //save the key to avoid ask for share again
-                        NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-                        [defaults setBool:YES forKey:SHARED_TWITTER_KEY];
+                        [[NSUserDefaults standardUserDefaults]setBool:YES forKey:SHARED_TWITTER_KEY];
                         
+                        self.shareToWinClicked = false;
+                        self.replayButton.userInteractionEnabled=YES;
+                        
+                        msg = NSLocalizedString(@"thank_you_for_sharing", @"thank_you_for_sharing");
                         
                         [self hideGameOver];
+                    }
+                    else {
+                        //normal share of score
+                        msg = NSLocalizedString(@"twitter_post_ok", @"twitter_post_ok");
                     }
                     break;
                     
@@ -1512,7 +1662,7 @@
     if(_isFacebookAvailable || _isTwitterAvailable) {
         [self setupSocialShareTouch];
     }
-    NSLog(@"facebook available %d",_isFacebookAvailable);
+ 
 }
 
 
@@ -1532,26 +1682,6 @@
         
         //check if there is sprites to add
         [self checkGoodsBalance];
-        
-        
-        //need to update the number of moves
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        
-        NSUInteger newNumMovesPurchased = [defaults integerForKey:NUM_PURCHASED_MOVES_KEY];
-        
-        //this i can just update directly
-        self.numLevelsPurchased = [defaults integerForKey:NUM_PURCHASED_LEVELS_KEY];
-        
-        //for this i need to check if we have more now, than last saved value
-        if(newNumMovesPurchased > self.numMovesPurchased) {
-            //do i have more now?? Add the difference
-            NSUInteger dif = newNumMovesPurchased - self.numMovesPurchased;
-            //NSLog(@"number of moves willMoveToPosition: %lu",(unsigned long)self.level.maximumMoves);
-            
-            [self increaseNumberOfMovesBy:dif];
-            
-        }
-        [self updateLabels];
         
     }
     
@@ -1579,6 +1709,46 @@
     // effect than animating from FrontViewPositionRightMost. Use this instead of FrontViewPositionRightMost when
     // you intent to remove the front controller view from the view hierarchy.
     //FrontViewPositionRightMostRemoved,
+}
+//non market
+-(void)notifyBoosterItemPurchase:(NSString*)itemId {
+    
+    [NSTimer scheduledTimerWithTimeInterval:2.0  target:self
+                                   selector:@selector(showHowToUseBooster)
+                                   userInfo:nil
+                                    repeats:NO];
+}
+
+-(void) showHowToUseBooster {
+    [[[[iToast makeText:NSLocalizedString(@"touch_booster_howto", @"touch_booster_howto")]
+       setGravity:iToastGravityCenter] setDuration:1000] show];
+}
+
+
+//market
+-(void)notifyMarketPurchase:(NSString*)itemId {
+    
+    NSLog(@"notify purchase of %@",itemId);
+    //need to update the number of moves
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSUInteger newNumMovesPurchased = [defaults integerForKey:NUM_PURCHASED_MOVES_KEY];
+    
+    
+    //for this i need to check if we have more now, than last saved value
+    if(newNumMovesPurchased > self.numMovesPurchased) {
+        //do i have more now?? Add the difference
+        NSUInteger dif = newNumMovesPurchased - self.numMovesPurchased;
+        //NSLog(@"number of moves willMoveToPosition: %lu",(unsigned long)self.level.maximumMoves);
+        
+        [self increaseNumberOfMovesBy:dif];
+        
+    }
+    //this i can just update directly
+    self.numLevelsPurchased = [defaults integerForKey:NUM_PURCHASED_LEVELS_KEY];
+    self.numMovesPurchased = newNumMovesPurchased;
+    
+    [self updateLabels];
 }
 
 -(void) increaseNumberOfMovesBy:(NSUInteger) dif {

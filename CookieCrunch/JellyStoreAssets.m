@@ -57,6 +57,10 @@ NSString* const JELLY_MANIACS_10MOVES_PRODUCT_ID = @"jelly_maniacs_moves10";
 NSString* const JELLY_MANIACS_10LEVELS_PACK_ITEM_ID = @"jelly_maniacs_levels10";
 NSString* const JELLY_MANIACS_10LEVELS_PRODUCT_ID = @"jelly_maniacs_levels10";
 
+//25 levels
+NSString* const JELLY_MANIACS_25LEVELS_PACK_ITEM_ID = @"jelly_maniacs_levels25";
+NSString* const JELLY_MANIACS_25LEVELS_PRODUCT_ID = @"jelly_maniacs_levels25";
+
 // Non Consumables
 //NSString* const NO_ADS_NON_CONS_ITEM_ID = @"no_ads";
 //NSString* const NO_ADS_PRODUCT_ID = @"my.game.no_ads";
@@ -83,6 +87,7 @@ VirtualGood* SMASH_BOMB_GOOD;
 //VirtualCurrencyPack* _10_JELLY_MANIACS_LEVELS_PACK;
 
 //5 and 10 extra moves
+VirtualCurrencyPack* PRODUCT_EXTRA_25_LEVELS;
 VirtualCurrencyPack* PRODUCT_EXTRA_10_LEVELS;
 VirtualCurrencyPack* PRODUCT_EXTRA_10_MOVES;
 VirtualCurrencyPack* PRODUCT_EXTRA_5_MOVES;
@@ -98,9 +103,18 @@ NSString *NO_ADS_PRODUCT_ID = @"no.ads.id";
     
     /** Virtual Currency Packs **/
     
-    PRODUCT_EXTRA_10_LEVELS = [[VirtualCurrencyPack alloc] initWithName:@"10 Extra Levels" andDescription:@"10 Extra Levels"  andItemId:JELLY_MANIACS_10LEVELS_PACK_ITEM_ID andPurchaseType:[[PurchaseWithMarket alloc] initWithMarketItem:[[MarketItem alloc] initWithProductId:JELLY_MANIACS_10LEVELS_PRODUCT_ID andConsumable:kConsumable andPrice:2.99]]];
+    //LEVELS
+    
+    PRODUCT_EXTRA_10_LEVELS = [[VirtualCurrencyPack alloc] initWithName:@"10 Extra Levels" andDescription:@"10 Extra Levels"  andItemId:JELLY_MANIACS_10LEVELS_PACK_ITEM_ID andPurchaseType:[[PurchaseWithMarket alloc] initWithMarketItem:[[MarketItem alloc] initWithProductId:JELLY_MANIACS_10LEVELS_PRODUCT_ID andConsumable:kConsumable andPrice:1.99]]];
     
     PRODUCT_EXTRA_10_LEVELS.currencyItemId = JELLY_CURRENCY_ITEM_ID;
+    
+    
+    PRODUCT_EXTRA_25_LEVELS = [[VirtualCurrencyPack alloc] initWithName:@"25 Extra Levels" andDescription:@"25 Extra Levels"  andItemId:JELLY_MANIACS_25LEVELS_PACK_ITEM_ID andPurchaseType:[[PurchaseWithMarket alloc] initWithMarketItem:[[MarketItem alloc] initWithProductId:JELLY_MANIACS_25LEVELS_PRODUCT_ID andConsumable:kConsumable andPrice:2.99]]];
+    
+    PRODUCT_EXTRA_25_LEVELS.currencyItemId = JELLY_CURRENCY_ITEM_ID;
+    
+    //MOVES
     
     PRODUCT_EXTRA_10_MOVES = [[VirtualCurrencyPack alloc] initWithName:@"10 Extra Moves" andDescription:@"10 Extra Moves" andItemId:JELLY_MANIACS_10MOVES_PACK_ITEM_ID andPurchaseType:[[PurchaseWithMarket alloc] initWithMarketItem:[[MarketItem alloc] initWithProductId:JELLY_MANIACS_10MOVES_PRODUCT_ID andConsumable:kConsumable andPrice:1.99]]];
     
@@ -224,7 +238,7 @@ NSString *NO_ADS_PRODUCT_ID = @"no.ads.id";
 }
 
 - (NSArray*)virtualCurrencyPacks{
-    return @[PRODUCT_EXTRA_5_MOVES,PRODUCT_EXTRA_10_MOVES,PRODUCT_EXTRA_10_LEVELS];
+    return @[PRODUCT_EXTRA_5_MOVES,PRODUCT_EXTRA_10_MOVES,PRODUCT_EXTRA_10_LEVELS,PRODUCT_EXTRA_25_LEVELS];
 }
 
 - (NSArray*)virtualCategories{

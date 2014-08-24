@@ -10,12 +10,16 @@
 #define JellyCrush_Constants_h
 
 //total available
-#define NUM_AVAILABLE_LEVELS 100
+#define NUM_AVAILABLE_LEVELS 101
 //total purchased (in default installation is 50)
 #define NUM_PURCHASED_LEVELS 50
 //define number of purchased moves
 //this will increment by 5 or 10
 #define NUM_PURCHASED_MOVES 0
+
+//minimum number of moves in any level
+#define MIN_NUM_MOVES_LEVEL 5
+//#define DEBUG_RUN
 
 //i can only play this 10 without share to twitter
 //otherwise i need to wait 3 minutes
@@ -41,6 +45,10 @@
 #define JELLY_MANIACS_LEADERBOARD                   @"jelly_maniacs_leaderboard"
 #define JELLY_MANIACS_REACH_LEVEL_50_ACHIEVEMENT    @"jelly_maniacs_level50_achievement"
 #define JELLY_MANIACS_REACH_LEVEL_100_ACHIEVEMENT   @"jelly_maniacs_level100_achievement"
+
+//#define KAMCORD_DEVELOPER_KEY @"vampl8CD0rxxCKR2ceUapOnYd2itI26vAkCRMVLmPUg"
+//#define KAMCORD_DEVELOPER_SECRET @"x7qHVMfN8WextF6a1ZkpKmaI9RL5etOXBXbBhO4TMwQ"
+//#define GAME_NAME @"Jelly Maniacs"
 
 //applovin key
 //r1p6n7_2ZCyP6V4tANBKvL4oM4mkbSkRUWXGeWICiEbqkghu2tDyDHlZLUIyy0NQXwgAQ-M8CzyxedqgV1diJM

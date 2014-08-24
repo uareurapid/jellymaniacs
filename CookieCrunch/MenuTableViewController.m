@@ -50,7 +50,7 @@ int balance;
 {
     [super viewDidLoad];
 
-    _menuItems = @[@"moves5",@"moves10",@"levels",@"smash",@"dark",@"blue",@"green",@"yellow",@"red",@"pink",@"restore"];
+    _menuItems = @[@"moves5",@"moves10",@"levels",@"levels25",@"smash",@"dark",@"blue",@"green",@"yellow",@"red",@"pink",@"restore"];
     //[StoreInventory giveAmount:10 ofItem:@"currency_coin"];
    
     
@@ -92,6 +92,16 @@ int balance;
     return _menuItems.count;
 }
 
+//get the main controller
+-(ViewController*) getMainController {
+
+    SWRevealViewController *reveal = (SWRevealViewController*)self.parentViewController;
+    UINavigationController *nav = (UINavigationController*)reveal.frontViewController;
+    ViewController *viewController = (ViewController*)[nav.childViewControllers objectAtIndex:0];
+    return viewController;
+    
+}
+
 -(void) refreshTable {
     [self.tableView reloadData];
 }
@@ -108,7 +118,7 @@ int balance;
     
     
     
-    if(row==3) {
+    if(row==4) {
         if(balance < 500) {
             cell.smashBombLocker.hidden=false;
         }
@@ -117,7 +127,7 @@ int balance;
         }
         
     }
-    else if(row>3) {
+    else if(row>4) {
         
         if(balance<200) {
             
@@ -191,10 +201,10 @@ int balance;
            setGravity:iToastGravityBottom] setDuration:2000] show];
         [[SoomlaStore getInstance] restoreTransactions];
     }
-    else if(row>=3 && row < restore) {
-        //row 3 is smash bomb
+    else if(row>=4 && row < restore) {
+        //row 4 is smash bomb
         
-        NSInteger index = row-3; //we subtract 3, which are the market ones (5,10 moves and 10 levels)
+        NSInteger index = row-4; //we subtract 4, which are the market ones (5,10 moves and 10,25 levels)
         //from row 4 to 8 is jellies
         VirtualGood* good = [[[StoreInfo getInstance] virtualGoods] objectAtIndex:index];
         
@@ -207,9 +217,9 @@ int balance;
                 NSString * msg = [NSString stringWithFormat: @"%@ %@",NSLocalizedString(@"congratulations_purchased", @"congratulations_purchased"),
                                   good.description ];
                 [[[[iToast makeText:msg]
-                   setGravity:iToastGravityBottom] setDuration:2000] show];
+                   setGravity:iToastGravityCenter] setDuration:2000] show];
                 
-                NSLog(@"remaining balance is %d",[StoreInventory getItemBalance:good.itemId]);
+                //NSLog(@"remaining balance is %d",[StoreInventory getItemBalance:good.itemId]);
                 
             }
             @catch (InsufficientFundsException *exception) {
@@ -244,19 +254,76 @@ int balance;
         
         switch (row) {
             //these are always available
+            //buy 5 moves
             case 0:
                 [StoreInventory buyItemWithItemId:JELLY_MANIACS_5MOVES_PACK_ITEM_ID andPayload:@"buy 5 extra moves"];
                 break;
+            //buy 10 moves
             case 1:
                 [StoreInventory buyItemWithItemId:JELLY_MANIACS_10MOVES_PACK_ITEM_ID andPayload:@"buy 10 extra moves" ];
                 break;
+            //buy 10 levels
             case 2:
                 
                 purchasedLevels = [defaults integerForKey:NUM_PURCHASED_LEVELS_KEY];
                 //do we already have the 100 available?
                 if(purchasedLevels < NUM_AVAILABLE_LEVELS) {
                     //if not buy
-                   [StoreInventory buyItemWithItemId:JELLY_MANIACS_10LEVELS_PACK_ITEM_ID andPayload:@"buy 10 extra levels"];
+                    
+                    //at least 10 available?
+                    if(NUM_AVAILABLE_LEVELS - purchasedLevels < 10) {
+                        //cannot buy more, not available
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"no_more_levels", @"no_more_levels")
+                                                                        message:NSLocalizedString(@"no_more_levels_fit_pack", @"no_more_levels_fit_pack")
+                                                                       delegate:nil
+                                                              cancelButtonTitle:@"OK"
+                                                              otherButtonTitles:nil];
+                        
+                        [alert show];
+                    }
+                    else {
+                       [StoreInventory buyItemWithItemId:JELLY_MANIACS_10LEVELS_PACK_ITEM_ID andPayload:@"buy 10 extra levels"]; 
+                    }
+                    
+                   
+                }
+                else {
+                    //cannot buy more, not available
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"no_more_levels", @"no_more_levels")
+                                                                    message:NSLocalizedString(@"have_all_levels", @"have_all_levels")
+                                                                   delegate:nil
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles:nil];
+                    
+                    [alert show];
+                }
+                
+                break;
+            //buy 25 levels
+            case 3:
+                
+                purchasedLevels = [defaults integerForKey:NUM_PURCHASED_LEVELS_KEY];
+                //do we already have the 100 available?
+                if(purchasedLevels < NUM_AVAILABLE_LEVELS) {
+                    //if not buy
+                    
+                    //need to have at least 25 available to be able to buy this pack
+                    if(NUM_AVAILABLE_LEVELS - purchasedLevels < 25) {
+                        //cannot buy more, not available
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"no_more_levels", @"no_more_levels")
+                                                                        message:NSLocalizedString(@"no_more_levels_fit_pack", @"no_more_levels_fit_pack")
+                                                                       delegate:nil
+                                                              cancelButtonTitle:@"OK"
+                                                              otherButtonTitles:nil];
+                        
+                        [alert show];
+                    }
+                    else {
+                       [StoreInventory buyItemWithItemId:JELLY_MANIACS_25LEVELS_PACK_ITEM_ID andPayload:@"buy 25 extra levels"];
+                    }
+                    
+                    
+                    
                 }
                 else {
                     //cannot buy more, not available
@@ -291,7 +358,7 @@ int balance;
 }
 
 - (void)goodBalanceChanged:(NSNotification*)notification{
-    //NSLog(@"called goodBalanceChanged");
+    NSLog(@"called goodBalanceChanged");
     [self refreshTable];
 }
 
@@ -300,6 +367,12 @@ int balance;
     NSDictionary* userInfo = [notification userInfo];
     PurchasableVirtualItem *item = [userInfo objectForKey:DICT_ELEMENT_PURCHASABLE];
     NSLog(@"item purchased: %@ - %@",item.itemId,item.description);
+    
+    if([item.itemId rangeOfString:@"_item_id"].location != NSNotFound) {
+        
+        [[self getMainController] notifyBoosterItemPurchase:item.itemId];
+    }
+    
     [self refreshTable];
     
 }
@@ -337,6 +410,21 @@ int balance;
         [defaults setInteger: purchasedLevels forKey:NUM_PURCHASED_LEVELS_KEY];
       
     }
+    //did i just bought the 25 extra levels???
+    //if so i need to update the settings
+    if([item.itemId isEqualToString:JELLY_MANIACS_25LEVELS_PACK_ITEM_ID]) {
+        
+        defaults = [NSUserDefaults standardUserDefaults];
+        NSInteger purchasedLevels = [defaults integerForKey:NUM_PURCHASED_LEVELS_KEY];
+        //double check the limit
+        if(purchasedLevels < NUM_AVAILABLE_LEVELS) {
+            purchasedLevels = purchasedLevels + 25;
+        }
+        
+        //add the new 25 and save the settings
+        [defaults setInteger: purchasedLevels forKey:NUM_PURCHASED_LEVELS_KEY];
+        
+    }
     else if([item.itemId isEqualToString:JELLY_MANIACS_10MOVES_PACK_ITEM_ID]) {
         
         defaults = [NSUserDefaults standardUserDefaults];
@@ -358,6 +446,8 @@ int balance;
         //NSLog(@"setting purchased moves value to %ld",(long)purchasedMoves);
         
     }
+    //notify the main view
+    [[self getMainController] notifyMarketPurchase:item.itemId];
     
     
 }

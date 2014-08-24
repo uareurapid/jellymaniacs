@@ -37,6 +37,9 @@ extern NSString* const JELLY_MANIACS_10MOVES_PACK_ITEM_ID;
 //10 levels
 extern NSString* const JELLY_MANIACS_10LEVELS_PACK_ITEM_ID;
 
+//25 levels
+extern NSString* const JELLY_MANIACS_25LEVELS_PACK_ITEM_ID;
+
 // Goods
 
 extern NSString* const GREEN_JELLY_ITEM_ID;

@@ -1,9 +1,9 @@
 //
 //  AppDelegate.h
-//  CookieCrunch
+//  JellyCrush
 //
-//  Created by Matthijs on 25-02-14.
-//  Copyright (c) 2014 Razeware LLC. All rights reserved.
+//  Created by Paulo Cristo on 23/07/14.
+//  Copyright (c) 2014 PC Dreams Software. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

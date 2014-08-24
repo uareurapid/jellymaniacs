@@ -1,9 +1,9 @@
 //
 //  AppDelegate.m
-//  CookieCrunch
+//  JellyCrush
 //
-//  Created by Matthijs on 25-02-14.
-//  Copyright (c) 2014 Razeware LLC. All rights reserved.
+//  Created by Paulo Cristo on 23/07/14.
+//  Copyright (c) 2014 PC Dreams Software. All rights reserved.
 //
 
 #import "AppDelegate.h"
@@ -16,7 +16,7 @@
 #import "ALSdk.h"
 #import "Appirater.h"
 
-#define DEBUG_RUN
+//#define DEBUG_RUN
 
 @implementation AppDelegate
 
@@ -40,7 +40,7 @@
     if (![defaults boolForKey:@"NotFirstLaunch"])
     {
         [defaults setBool:YES forKey:@"NotFirstLaunch"];
-        [(VirtualCurrency*)[storeAssets.virtualCurrencies objectAtIndex:0] giveAmount:1000];
+        [(VirtualCurrency*)[storeAssets.virtualCurrencies objectAtIndex:0] giveAmount:300];
     }
     
     //if the key doesn´t exist yet, set the value to 1;
@@ -57,9 +57,9 @@
     
     
     //test
-#ifdef DEBUG_RUN
-    [(VirtualCurrency*)[storeAssets.virtualCurrencies objectAtIndex:0] giveAmount:1000];
-#endif
+//#ifdef DEBUG_RUN
+//    [(VirtualCurrency*)[storeAssets.virtualCurrencies objectAtIndex:0] giveAmount:1000];
+//#endif
     //if not exists, set the total number of levels (as for version 1.0 is 100)
     if (![defaults integerForKey:NUM_AVAILABLE_LEVELS_KEY])
     {

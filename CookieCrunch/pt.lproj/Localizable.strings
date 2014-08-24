@@ -7,7 +7,7 @@
 */
 
 
-
+"touch_booster_howto"="Toca na ajuda para sabere como usá-la.";
 "congratulations_purchase" = "Parabéns! Compra efectuada.";
 "congratulations_purchased" = "Parabéns! Acabaste de comprar";
 "failed_purchase" = "Erro! A compra falhou";
@@ -17,8 +17,15 @@
 "twitter_post_canceled" = "Envio para o Twitter cancelado";
 "level" = "Nível";
 "you_won"="Ganhaste";
+"new_best_score"="Novo recorde. Parabéns!";
 "no_more_levels"="Não existem níveis";
-"buy_10_levels"="Podes comprar 10 níveis extra para continuares a jogar.";
+"checkout_my_score_%lu"="Olha o meu recorde no Jelly Maniacs: %lu\n";
+"checkout_my_app"="Conheça o Jelly Maniacs, um jogo fantástico.";
+"thank_you_for_sharing"="Obrigado por partilhar o Jelly Maniacs.";
+"buy_10_levels"="Podes comprar 10 níveis extra para continuares a jogar.\n(Qualquer compra remove também os anúncios)";
+"buy_25_levels"="Podes comprar 25 níveis extra para continuares a jogar.\n(Qualquer compra remove também os anúncios)";
+"buy_levels_generic"="Podes comprar níveis extra para continuares a jogar.\n(Qualquer compra remove também os anúncios)";
+"no_more_levels_fit_pack"="O número de níveis disponíveis é menor do que este pack. Só pode comprar o pack abaixo!";
 "no_more_levels_improve"="Não existem mais níveis disponíveis. É altura de tentares melhorar o teu recorde.";
 "insufficient_funds"="Saldo insuficiente";
 "not_enough_jellys"="Não tens estrelas suficientes para comprar este item. Continua a jogar.";
@@ -31,8 +38,8 @@
 "jelly_stars"="Estrelas";
 "no_more_moves" = "Jogadas insuficientes";
 "last_level_buy_warning" = "Último nível disponível";
-"running_out_moves"="Comprar jogadas extra para terminar o nível?";
-"running_out_levels"="Comprar níveis extra para continuar a jogar?";
+"running_out_moves"="Comprar jogadas extra para terminar o nível?\n(Qualquer compra remove também os anúncios)";
+"running_out_levels"="Comprar níveis extra para continuar a jogar?\n(Qualquer compra remove também os anúncios)";
 "restore_purchases"="Repor compras";
 "music_off"="Música desligada";
 "music_on"="Música ligada";

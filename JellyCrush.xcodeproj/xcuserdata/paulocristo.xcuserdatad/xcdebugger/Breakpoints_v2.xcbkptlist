@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CookieCrunch/ViewController.m"
-            timestampString = "430181693.999182"
+            timestampString = "430497641.494541"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "744"
-            endingLineNumber = "744"
+            startingLineNumber = "808"
+            endingLineNumber = "808"
             landmarkName = "-supportedInterfaceOrientations"
             landmarkType = "5">
          </BreakpointContent>
@@ -44,12 +44,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CookieCrunch/MenuTableViewController.m"
-            timestampString = "429989432.929659"
+            timestampString = "430349508.912902"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "316"
-            endingLineNumber = "316"
-            landmarkName = "-marketItemPurchased:"
+            startingLineNumber = "367"
+            endingLineNumber = "367"
+            landmarkName = "-itemPurchased:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -60,28 +60,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CookieCrunch/MyScene.m"
-            timestampString = "430091365.270475"
+            timestampString = "430509795.79714"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "139"
-            endingLineNumber = "139"
+            startingLineNumber = "143"
+            endingLineNumber = "143"
             landmarkName = "-loadBackgroundForLevel:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CookieCrunch/ViewController.m"
-            timestampString = "430178643.677732"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "157"
-            endingLineNumber = "157"
-            landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -7,7 +7,7 @@
 */
 
 
-
+"touch_booster_howto"="Touch the booster to learn how to use it.";
 "congratulations_purchase" = "Congratulations! Purchase complete.";
 "congratulations_purchased" = "Congratulations! You just purchased";
 "failed_purchase" = "Error! Purchase failed";
@@ -17,8 +17,15 @@
 "twitter_post_canceled" = "Post to Twitter canceled";
 "level" = "Level";
 "you_won"="You won";
+"new_best_score"="New best score. Congratulations!";
 "no_more_levels"="No more levels";
-"buy_10_levels"="You can buy 10 extra levels to continue playing.";
+"checkout_my_score_%lu"="Checkout my Jelly Maniacs score: %lu\n";
+"checkout_my_app"="Checkout Jelly Maniacs, great game.";
+"thank_you_for_sharing"="Thank your for sharing Jelly Maniacs.";
+"buy_10_levels"="You can buy 10 extra levels to continue playing.\n(Any purchase will also remove ads)";
+"buy_25_levels"="You can buy 25 extra levels to continue playing.\n(Any purchase will also remove ads)";
+"buy_levels_generic"="You can buy extra levels to continue playing.\n(Any purchase will also remove ads)";
+"no_more_levels_fit_pack"="The number of available levels is not enough for this pack. Please buy a lower pack!";
 "no_more_levels_improve"="No more levels available. Time to improve your score.";
 "insufficient_funds"="Insufficient funds";
 "not_enough_jellys"="You don't have enough jelly stars to purchase this item. Keep playing.";
@@ -31,8 +38,8 @@
 "jelly_stars"="stars";
 "last_level_buy_warning" = "Last available level";
 "no_more_moves" = "Insufficient moves left";
-"running_out_moves"="Buy extra moves to finish the level?";
-"running_out_levels"="Buy extra levels to keep playing?";
+"running_out_moves"="Buy extra moves to finish the level?\n(Any purchase will also remove ads)";
+"running_out_levels"="Buy extra levels to keep playing?\n(Any purchase will also remove ads)";
 "restore_purchases"="Restore purchases";
 "music_off"="Music off";
 "music_on"="Music on";

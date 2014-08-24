@@ -1,3 +1,6 @@
+//  Created by Paulo Cristo on 23/07/14.
+//  Copyright (c) 2014 PC Dreams Software. All rights reserved.
+//
 
 #import "MyScene.h"
 #import "PCJelly.h"
@@ -38,6 +41,7 @@ CGFloat myScale = 1.0;
 @property (strong, nonatomic) SKAction *awesomeMoveSound;
 @property (strong, nonatomic) SKAction *jellyManiacSound;
 @property (strong, nonatomic) SKAction * passLevelSound;
+@property (strong, nonatomic) SKAction * gameOverSound;
 
 @property (strong, nonatomic) SKCropNode *cropLayer;
 @property (strong, nonatomic) SKNode *maskLayer;
@@ -75,7 +79,7 @@ CGFloat myScale = 1.0;
     
     // Put an image on the background. Because the scene's anchorPoint is
     // (0.5, 0.5), the background image will always be centered on the screen.
-    SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"grass-and-the-sky-background.jpg"];//dunes.jpgdunes.jpgbeach.jpg
+    SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"grass-and-the-sky-background.jpg"];
     background.name = @"background";
     [self addChild:background];
 
@@ -138,29 +142,47 @@ CGFloat myScale = 1.0;
     
     SKSpriteNode *background = (SKSpriteNode *)[self childNodeWithName:@"background"];
     
+    //if mount
     if(background!=nil) {
         switch(levelNumber) {
             case 10:
                 background.texture = [SKTexture textureWithImageNamed:@"beach.jpg"];
                 break;
             case 20:
-                background.texture = [SKTexture textureWithImageNamed:@"desert.jpg"];
+                background.texture = [SKTexture textureWithImageNamed:@"paradise.jpg"];
                 break;
             case 30:
+                background.texture = [SKTexture textureWithImageNamed:@"rocky-desert.jpg"];//@"dunes.jpg"
+                break;
+                
+            case 40:
+                background.texture = [SKTexture textureWithImageNamed:@"autumn-leaves.jpg"];//there is also desert.jpg
+                break;
+            case 50:
+                background.texture = [SKTexture textureWithImageNamed:@"glaciar.jpg"];
+                break;
+            case 60:
+                background.texture = [SKTexture textureWithImageNamed:@"mountain.jpg"];
+                break;
+                
+            case 70:
+                background.texture = [SKTexture textureWithImageNamed:@"dunes.jpg"];
+                break;
+              
+            case 80:
+                background.texture = [SKTexture textureWithImageNamed:@"caribbean.jpg"];
+                break;
+                
+            case 90:
                 background.texture = [SKTexture textureWithImageNamed:@"grass.jpg"];
                 break;
-            case 40:
-                background.texture = [SKTexture textureWithImageNamed:@"grass-and-the-sky-background.jpg"];
-                break;
                 
-            case 50:
-                background.texture = [SKTexture textureWithImageNamed:@"brickwall@2x.png"];
-                break;
-                
-                
-                
-            default:
+            case 100:
                 background.texture = [SKTexture textureWithImageNamed:@"bg_dirt@2x.png"];
+                break;
+
+            default:
+                background.texture = [SKTexture textureWithImageNamed:@"brickwall@2x.png"];
                 break;
         }
     }
@@ -179,6 +201,8 @@ CGFloat myScale = 1.0;
   self.superCoolSound = [SKAction playSoundFileNamed:@"supercool2.m4a" waitForCompletion:NO];
   self.jellyManiacSound = [SKAction playSoundFileNamed:@"jellymaniac2.m4a" waitForCompletion:NO];
   self.passLevelSound = [SKAction playSoundFileNamed:@"iuu.m4a" waitForCompletion:NO];
+    
+  self.gameOverSound = [SKAction playSoundFileNamed:@"gameover_broken.mp3" waitForCompletion:NO];
 
 
   [SKLabelNode labelNodeWithFontNamed:@"GillSans-BoldItalic"];
@@ -957,6 +981,11 @@ CGFloat myScale = 1.0;
 }
 
 //play sounds from controller
+
+- (void)playGameOverSound {
+    [self runAction:self.gameOverSound];
+}
+
 - (void)playSuperCoolSound {
     [self runAction:self.superCoolSound];
 }

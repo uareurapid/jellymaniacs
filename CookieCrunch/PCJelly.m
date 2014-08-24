@@ -1,8 +1,8 @@
 //
-//  RWTCookie.m
-//  CookieCrunch
+//  PCJelly.m
+//  JellyCrush
 //
-//  Created by Paulo Cristo on 25-02-14.
+//  Created by Paulo Cristo on 23/07/14.
 //  Copyright (c) 2014 PC Dreams Software. All rights reserved.
 //
 
