@@ -10,29 +10,29 @@
 	<string>JellyCrush</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>1D198E78-1B7C-471E-9B2C-68B373A445C9</key>
+		<key>DC75B3A9888CCDAD4535F05FEF07B6EF0A9EB611</key>
 		<string>https://bitbucket.org/uareurapid/jelly-maniacs.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>JellyCrush.xcodeproj/project.xcworkspace</string>
+	<string>JellyCrush.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>1D198E78-1B7C-471E-9B2C-68B373A445C9</key>
+		<key>DC75B3A9888CCDAD4535F05FEF07B6EF0A9EB611</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://bitbucket.org/uareurapid/jelly-maniacs.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>1D198E78-1B7C-471E-9B2C-68B373A445C9</string>
+	<string>DC75B3A9888CCDAD4535F05FEF07B6EF0A9EB611</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>1D198E78-1B7C-471E-9B2C-68B373A445C9</string>
+			<string>DC75B3A9888CCDAD4535F05FEF07B6EF0A9EB611</string>
 			<key>IDESourceControlWCCName</key>
 			<string>CookieCrunch-Final</string>
 		</dict>

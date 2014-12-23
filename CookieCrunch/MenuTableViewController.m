@@ -50,7 +50,7 @@ int balance;
 {
     [super viewDidLoad];
 
-    _menuItems = @[@"moves5",@"moves10",@"levels",@"levels25",@"smash",@"dark",@"blue",@"green",@"yellow",@"red",@"pink",@"restore"];
+    _menuItems = @[@"moves5",@"moves10",@"levels",@"levels25",@"smash",@"dark",@"blue",@"green",@"yellow",@"red",@"pink"];
     //[StoreInventory giveAmount:10 ofItem:@"currency_coin"];
    
     
@@ -116,9 +116,44 @@ int balance;
     
     NSInteger row = indexPath.row;
     
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    NSInteger purchasedLevels = [defaults integerForKey:NUM_PURCHASED_LEVELS_KEY]; //the standard value
     
-    
-    if(row==4) {
+    if(row==2) {
+        
+        if(purchasedLevels < NUM_AVAILABLE_LEVELS) {
+            //if not buy
+            
+            //at least 10 available?
+            if(NUM_AVAILABLE_LEVELS - purchasedLevels < 10) {
+                 cell.levels10Locker.hidden=false;
+            }
+            else {
+                 cell.levels10Locker.hidden=true;
+            }
+        }
+        else {
+            cell.levels10Locker.hidden=false;
+        }
+        
+    }
+    else if(row==3) {
+        if(purchasedLevels < NUM_AVAILABLE_LEVELS) {
+            //if not buy
+            
+            //at least 25 available?
+            if(NUM_AVAILABLE_LEVELS - purchasedLevels < 25) {
+                cell.levels25Locker.hidden=false;
+            }
+            else {
+                cell.levels25Locker.hidden=true;
+            }
+        }
+        else {
+            cell.levels25Locker.hidden=false;
+        }
+    }
+    else if(row==4) {
         if(balance < 500) {
             cell.smashBombLocker.hidden=false;
         }
@@ -192,16 +227,16 @@ int balance;
 {
     //NSInteger section = indexPath.section;
     NSInteger row =indexPath.row;
-    NSInteger restore = _menuItems.count-1;//last one
+    //NSInteger restore = _menuItems.count-1;//last one
     
     [tableView deselectRowAtIndexPath:[tableView indexPathForSelectedRow] animated:NO];
     
-    if(row==restore) {
+    /*if(row==restore) {
         [[[[iToast makeText:NSLocalizedString(@"restore_purchases", @"restore_purchases")]
            setGravity:iToastGravityBottom] setDuration:2000] show];
         [[SoomlaStore getInstance] restoreTransactions];
-    }
-    else if(row>=4 && row < restore) {
+    }*/
+    if(row>=4 ) {
         //row 4 is smash bomb
         
         NSInteger index = row-4; //we subtract 4, which are the market ones (5,10 moves and 10,25 levels)
@@ -394,12 +429,11 @@ int balance;
        setGravity:iToastGravityBottom] setDuration:2000] show];
     
     
-    NSUserDefaults* defaults;
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];;
     //did i just bought the 10 extra levels???
     //if so i need to update the settings
     if([item.itemId isEqualToString:JELLY_MANIACS_10LEVELS_PACK_ITEM_ID]) {
-        
-        defaults = [NSUserDefaults standardUserDefaults];
+
         NSInteger purchasedLevels = [defaults integerForKey:NUM_PURCHASED_LEVELS_KEY];
         //double check the limit
         if(purchasedLevels < NUM_AVAILABLE_LEVELS) {
@@ -414,7 +448,6 @@ int balance;
     //if so i need to update the settings
     if([item.itemId isEqualToString:JELLY_MANIACS_25LEVELS_PACK_ITEM_ID]) {
         
-        defaults = [NSUserDefaults standardUserDefaults];
         NSInteger purchasedLevels = [defaults integerForKey:NUM_PURCHASED_LEVELS_KEY];
         //double check the limit
         if(purchasedLevels < NUM_AVAILABLE_LEVELS) {
@@ -427,7 +460,6 @@ int balance;
     }
     else if([item.itemId isEqualToString:JELLY_MANIACS_10MOVES_PACK_ITEM_ID]) {
         
-        defaults = [NSUserDefaults standardUserDefaults];
         NSInteger purchasedMoves = [defaults integerForKey:NUM_PURCHASED_MOVES_KEY];
         purchasedMoves = purchasedMoves + 10;
         
@@ -438,7 +470,6 @@ int balance;
     }
     else if([item.itemId isEqualToString:JELLY_MANIACS_5MOVES_PACK_ITEM_ID]) {
         
-        defaults = [NSUserDefaults standardUserDefaults];
         NSInteger purchasedMoves = [defaults integerForKey:NUM_PURCHASED_MOVES_KEY];
         purchasedMoves = purchasedMoves + 5;
         //add the new 5 and save the settings

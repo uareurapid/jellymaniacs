@@ -44,11 +44,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CookieCrunch/MenuTableViewController.m"
-            timestampString = "430349508.912902"
+            timestampString = "431596517.967414"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "367"
-            endingLineNumber = "367"
+            startingLineNumber = "402"
+            endingLineNumber = "402"
             landmarkName = "-itemPurchased:"
             landmarkType = "5">
          </BreakpointContent>

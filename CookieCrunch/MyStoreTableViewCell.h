@@ -18,4 +18,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *redJellyLocker;
 @property (strong, nonatomic) IBOutlet UIImageView *pinkJellyLocker;
 
+@property (strong, nonatomic) IBOutlet UIImageView *levels10Locker;
+@property (strong, nonatomic) IBOutlet UIImageView *levels25Locker;
+
 @end

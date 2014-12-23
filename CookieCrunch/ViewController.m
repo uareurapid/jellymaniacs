@@ -1717,6 +1717,8 @@
                                    selector:@selector(showHowToUseBooster)
                                    userInfo:nil
                                     repeats:NO];
+    //update this label
+    self.jellyStarsLabel.text = [NSString stringWithFormat:@"%d", [StoreInventory getItemBalance:JELLY_CURRENCY_ITEM_ID]];
 }
 
 -(void) showHowToUseBooster {

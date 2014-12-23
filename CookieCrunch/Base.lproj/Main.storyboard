@@ -334,9 +334,16 @@
                                             <rect key="frame" x="3" y="7" width="120" height="40"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Lock32.png" id="z8O-Ns-PUJ" userLabel="Image View - lock.png">
+                                            <rect key="frame" x="144" y="14" width="32" height="32"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <connections>
+                                    <outlet property="levels10Locker" destination="z8O-Ns-PUJ" id="Z0Q-FI-QQi"/>
+                                </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="levels25" rowHeight="60" id="KrC-6i-ku8" customClass="MyStoreTableViewCell">
                                 <rect key="frame" x="0.0" y="202" width="320" height="60"/>
@@ -356,9 +363,16 @@
                                             <rect key="frame" x="3" y="7" width="120" height="40"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Lock32.png" id="8GN-ui-4VU" userLabel="Image View - lock.png">
+                                            <rect key="frame" x="144" y="14" width="32" height="32"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <connections>
+                                    <outlet property="levels25Locker" destination="8GN-ui-4VU" id="1UR-za-Hwh"/>
+                                </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="smash" rowHeight="60" id="kMK-yc-CYG" customClass="MyStoreTableViewCell">
                                 <rect key="frame" x="0.0" y="262" width="320" height="60"/>
@@ -612,21 +626,6 @@
                                     <outlet property="pinkJellyLocker" destination="Mhm-9e-g2u" id="Krf-mf-pTP"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="restore" rowHeight="60" id="JTs-vG-dMk" userLabel="Table View Cell - pink" customClass="MyStoreTableViewCell">
-                                <rect key="frame" x="0.0" y="682" width="320" height="60"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JTs-vG-dMk" id="Bu0-c0-jA5">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="restorepurchases.png" id="bEM-Ry-BhQ">
-                                            <rect key="frame" x="3" y="7" width="120" height="40"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        </imageView>
-                                    </subviews>
-                                </tableViewCellContentView>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                            </tableViewCell>
                         </prototypes>
                         <sections/>
                         <connections>
@@ -682,7 +681,6 @@
         <image name="purple_candy_anim_01.png" width="32" height="36"/>
         <image name="red_candy_anim_01.png" width="32" height="36"/>
         <image name="replay.png" width="73" height="75"/>
-        <image name="restorepurchases.png" width="214" height="72"/>
         <image name="share_twitter_or_wait.png" width="344" height="110"/>
         <image name="shareandwin.png" width="344" height="110"/>
         <image name="shuffle.png" width="214" height="72"/>
