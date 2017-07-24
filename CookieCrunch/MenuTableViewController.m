@@ -437,7 +437,8 @@ int balance;
         NSInteger purchasedLevels = [defaults integerForKey:NUM_PURCHASED_LEVELS_KEY];
         //double check the limit
         if(purchasedLevels < NUM_AVAILABLE_LEVELS) {
-           purchasedLevels = purchasedLevels + 10;
+           //NOTE, i updated this to give 25 Levels instead
+           purchasedLevels = purchasedLevels + 25;
         }
         
         //add the new 10 and save the settings
@@ -450,8 +451,9 @@ int balance;
         
         NSInteger purchasedLevels = [defaults integerForKey:NUM_PURCHASED_LEVELS_KEY];
         //double check the limit
+        //NOTE, i updated this to give 50 levels instead
         if(purchasedLevels < NUM_AVAILABLE_LEVELS) {
-            purchasedLevels = purchasedLevels + 25;
+            purchasedLevels = purchasedLevels + 50;
         }
         
         //add the new 25 and save the settings

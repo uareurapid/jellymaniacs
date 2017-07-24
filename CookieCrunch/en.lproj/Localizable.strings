@@ -19,9 +19,9 @@
 "you_won"="You won";
 "new_best_score"="New best score. Congratulations!";
 "no_more_levels"="No more levels";
-"checkout_my_score_%lu"="Checkout my Jelly Maniacs score: %lu\n";
-"checkout_my_app"="Checkout Jelly Maniacs, great game.";
-"thank_you_for_sharing"="Thank your for sharing Jelly Maniacs.";
+"checkout_my_score_%lu"="Checkout my Super Jelly Fruits Mania score: %lu\n";
+"checkout_my_app"="Checkout Super Jelly Fruits Mania, great game.";
+"thank_you_for_sharing"="Thank your for sharing Super Jelly Fruits Mania.";
 "buy_10_levels"="You can buy 10 extra levels to continue playing.\n(Any purchase will also remove ads)";
 "buy_25_levels"="You can buy 25 extra levels to continue playing.\n(Any purchase will also remove ads)";
 "buy_levels_generic"="You can buy extra levels to continue playing.\n(Any purchase will also remove ads)";
@@ -38,8 +38,11 @@
 "jelly_stars"="stars";
 "last_level_buy_warning" = "Last available level";
 "no_more_moves" = "Insufficient moves left";
+"running_out_moves_video"="Watch a small video and win 2 extra moves";
 "running_out_moves"="Buy extra moves to finish the level?\n(Any purchase will also remove ads)";
 "running_out_levels"="Buy extra levels to keep playing?\n(Any purchase will also remove ads)";
 "restore_purchases"="Restore purchases";
 "music_off"="Music off";
 "music_on"="Music on";
+"no_ads"="No ads";
+"no_ads_available"="No ads available at the moment";

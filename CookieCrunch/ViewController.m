@@ -18,9 +18,9 @@
 #import "ImageLoaderUniversalHelper.h"
 #import "Constants.h"
 #import "VirtualItemNotFoundException.h"
-#import "ALInterstitialAd.h"
 #import "GameCenterManager.h"
 
+#import <UserNotifications/UserNotifications.h>
 
 
 @interface ViewController ()
@@ -39,6 +39,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *lastSaveLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *denyLastSaveView;
 @property (strong, nonatomic) IBOutlet UIImageView *acceptLastSaveView;
+@property (weak, nonatomic) IBOutlet UIButton *btnWatchMovie;
+- (IBAction)btnWatchMovieClicked:(id)sender;
 
 @property (assign, nonatomic) NSUInteger movesLeft;
 @property (assign, nonatomic) NSUInteger levelScore;
@@ -110,6 +112,9 @@
 @property NSTimer *helperTimer;
 @property BOOL startFromLastSave;
 
+/// The interstitial ad.
+@property(nonatomic, strong) GADInterstitial *interstitial;
+
 - (IBAction) showLeaderboard;
 - (IBAction) submitScore;
 
@@ -143,6 +148,8 @@
    //must be done after check the services
     [self setupReplayButton];
     
+    //SET ADMOD ADS DELEGATE
+    [GADRewardBasedVideoAd sharedInstance].delegate = self;
     
     self.shareToWinClicked = false;
     
@@ -153,6 +160,7 @@
     self.coolMoveView.hidden = true;
     self.needHelpImageView.hidden = true;
     self.boosterImage.hidden = true;
+    self.btnWatchMovie.hidden = true;
     
     
    [self.navigationController setNavigationBarHidden:YES animated:YES];
@@ -237,8 +245,54 @@
     //    [self configureTwitterShareWaitBeforePlay];
     //}
 
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"10.0.0")) {
+       [self scheduleNotifications];
+    }
+    
+    
   
 }
+/*
+- (void)unityAdsVideoCompleted:(NSString *)rewardItemKey skipped:(BOOL)skipped {
+    //ad completed
+    @try {
+        [[UnityAds sharedInstance] hide];
+        if(!skipped) {
+            NSLog(@"REWARD USER");
+            self.movesLeft+=2;
+            [self.scene playRewardsSound];
+            [self updateLabels];
+        }
+    }
+    @catch(NSException *error) {
+        NSLog(@"gor error: %@",error.description);
+    }
+}*/
+
+//show the ads
+-(void) showRewardAds {
+    
+    @try {
+      if ([[GADRewardBasedVideoAd sharedInstance] isReady]) {
+            [[GADRewardBasedVideoAd sharedInstance] presentFromRootViewController:self];
+      }
+      else {
+          [self requestRewardedVideo];
+          UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"no_ads", @"no_ads")
+                                                          message:NSLocalizedString(@"no_ads_available", @"no_ads_available")
+                                                         delegate:nil
+                                                cancelButtonTitle:@"OK"
+                                                otherButtonTitles:nil];
+          
+          [alert show];
+      }
+    }
+    @catch(NSException *error) {
+        NSLog(@"error showing ads: %@",error.description);
+    }
+}
+
 
 -(void) configureGameScene {
     
@@ -798,7 +852,8 @@
     return YES;
 }
 
-- (NSUInteger)supportedInterfaceOrientations
+//was (NSInteger)
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         return UIInterfaceOrientationMaskAllButUpsideDown;
@@ -821,6 +876,12 @@
     
    NSLog(@"begin game: addTiles %@",addTiles==true?@"yes":@"no");
     
+   //request the video right here
+   if (![[GADRewardBasedVideoAd sharedInstance] isReady]) {
+      [self requestRewardedVideo];
+   }
+    
+   [self createAndLoadInterstitial];
     
   if(self.helperTimer==nil) {
     
@@ -835,6 +896,7 @@
     
    self.levelScore = 0;
    self.shareAndWinView.hidden = true;
+   self.btnWatchMovie.hidden = false;
     //force load the next level
     if(self.level==nil) {
        
@@ -1081,6 +1143,20 @@
       
       [self showGameOver: false bestScore:currentBestScore];
   }
+  else if(self.movesLeft==2 && (self.levelScore + 200) < self.level.targetScore) {
+      //with 2 moves even if i do 200 points it will not be enough to play
+      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"no_more_moves", @"no_more_moves")
+                                                      message:NSLocalizedString(@"running_out_moves_video", @"running_out_moves_video")
+                                                     delegate:nil
+                                            cancelButtonTitle:@"Cancel"
+                                            otherButtonTitles:@"OK",nil];
+      //this one has tag
+      [alert setTag:1024];
+      [alert setDelegate:self];
+      
+      [alert show];
+      
+  }
   else if(self.movesLeft==1) {
       //"no_more_moves" = "Jogadas insuficientes";
       //"running_out_moves"="Comprar jogadas extra para terminar o nível?";
@@ -1094,6 +1170,24 @@
       [alert show];
       [self revealToggleX:self];
   }
+}
+
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(alertView.tag==1024) {
+        if (buttonIndex == 0)
+        {
+            //Code for Cancel button
+            [alertView setHidden:true];
+        }
+        if (buttonIndex == 1)
+        {
+            //Code for ok button
+            [self showRewardAds];
+        }
+    }
+    
 }
 
 - (void)showGameOver: (BOOL)autoAdvance bestScore:(NSUInteger) bestSavedScore  {
@@ -1114,6 +1208,7 @@
        self.gameOverScoreLabel.hidden = YES;
        self.needHelpImageView.hidden = YES;
        self.bonusView.hidden = false;
+       self.btnWatchMovie.hidden = true;
        self.replayButton.hidden = YES;
         
        self.musicSettingView.hidden=true;
@@ -1209,12 +1304,14 @@
             
         }
         else {
-            //show intertitial every 5 levels
-            if(![self hasMadeAnyPurchases] && self.currentLevel%5==0 && [ALInterstitialAd isReadyForDisplay]) {
-                //show interstitial
-                [ALInterstitialAd showOver:[[UIApplication sharedApplication] keyWindow]];
+            //show intertitial every 4 levels
+            if(![self hasMadeAnyPurchases] && self.currentLevel%3==0 ) {
+               
+               if (self.interstitial.isReady) {
+                   [self.interstitial presentFromRootViewController:self];
+               }
+               
             }
-            
             //time to switch musics
             if(self.currentLevel%10==0) {
                 NSURL *url = nil;
@@ -1266,6 +1363,7 @@
         self.replayButton.hidden = NO;
         self.bonusView.hidden = true;
         self.leaderboardIcon.hidden = NO;
+        self.btnWatchMovie.hidden = YES;
         self.gameOverBestScoreLabel.hidden = NO;
         self.gameOverScoreLabel.hidden = NO;
         self.needHelpImageView.hidden = YES;
@@ -1359,6 +1457,7 @@
   self.gameOverScoreLabel.hidden = true;
   self.facebookIcon.hidden = YES;
   self.twitterIcon.hidden = YES;
+  self.btnWatchMovie.hidden = NO;
   
 //this is needed to update the booster image view
   self.musicSettingView.hidden=false;
@@ -1445,7 +1544,8 @@
         self.facebookIcon.hidden = YES;
         self.twitterIcon.hidden = YES;
         self.needHelpImageView.hidden = true;
-        
+        self.btnWatchMovie.hidden = true;
+    
     
 }
 
@@ -1862,4 +1962,121 @@
 }
 
 
+- (IBAction)btnWatchMovieClicked:(id)sender {
+    [self showRewardAds];
+}
+
+//only use notifs after IOS 10
+-(void) scheduleNotifications {
+    
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    [center requestAuthorizationWithOptions:(UNAuthorizationOptionBadge | UNAuthorizationOptionSound | UNAuthorizationOptionAlert)
+                          completionHandler:^(BOOL granted, NSError * _Nullable error) {
+                              if (!error) {
+                                  NSLog(@"request authorization succeeded!");
+                                  
+                                  //-----------------------------
+                                  
+                                  UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
+                                  content.title = [NSString localizedUserNotificationStringForKey:@"Hey Jelly Maniac:"
+                                                                                        arguments:nil];
+                                  content.body = [NSString localizedUserNotificationStringForKey:@"It´s time to practise your match 3 skills!"
+                                                                                       arguments:nil];
+                                  content.sound = [UNNotificationSound defaultSound];
+                                  
+                                  // 4. update application icon badge number
+                                  content.badge = [NSNumber numberWithInteger:([UIApplication sharedApplication].applicationIconBadgeNumber + 1)];
+                                  // Deliver the notification in 1 hour.
+                                  UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger
+                                                                                triggerWithTimeInterval:60*60.f
+                                                                                repeats:NO];
+                                  UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:@"one_hour_notif"
+                                                                                                        content:content
+                                                                                                        trigger:trigger];
+                                  /// 3. schedule localNotification
+                                  UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+                                  [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+                                      if (!error) {
+                                          NSLog(@"add NotificationRequest succeeded!");
+                                      }
+                                  }];
+                                  //-----------------------------
+                                  
+                              }
+                          }];
+    
+}
+
+#pragma ADMOB DELEGATES
+- (void)rewardBasedVideoAd:(GADRewardBasedVideoAd *)rewardBasedVideoAd
+   didRewardUserWithReward:(GADAdReward *)reward {
+    NSString *rewardMessage =
+    [NSString stringWithFormat:@"Reward received with currency %@ , amount %lf",
+     reward.type,
+     [reward.amount doubleValue]];
+    
+    //ad completed
+    @try {
+        
+     NSLog(@"REWARD USER");
+     self.movesLeft+=2;
+     [self.scene playRewardsSound];
+     [self updateLabels];
+     
+    }
+    @catch(NSException *error) {
+        NSLog(@"gor error: %@",error.description);
+    }
+    
+    
+}
+
+- (void)rewardBasedVideoAdDidReceiveAd:(GADRewardBasedVideoAd *)rewardBasedVideoAd {
+    NSLog(@"Reward based video ad is received.");
+}
+
+- (void)rewardBasedVideoAdDidOpen:(GADRewardBasedVideoAd *)rewardBasedVideoAd {
+    NSLog(@"Opened reward based video ad.");
+}
+
+- (void)rewardBasedVideoAdDidStartPlaying:(GADRewardBasedVideoAd *)rewardBasedVideoAd {
+    NSLog(@"Reward based video ad started playing.");
+}
+
+- (void)rewardBasedVideoAdDidClose:(GADRewardBasedVideoAd *)rewardBasedVideoAd {
+    NSLog(@"Reward based video ad is closed.");
+}
+
+- (void)rewardBasedVideoAdWillLeaveApplication:(GADRewardBasedVideoAd *)rewardBasedVideoAd {
+    NSLog(@"Reward based video ad will leave application.");
+}
+
+- (void)rewardBasedVideoAd:(GADRewardBasedVideoAd *)rewardBasedVideoAd
+    didFailToLoadWithError:(NSError *)error {
+    NSLog(@"Reward based video ad failed to load.");
+}
+
+/**
+ Prepare video
+ */
+- (void)requestRewardedVideo {
+    GADRequest *request = [GADRequest request];
+    //LOAD REWARD_VIDEO
+    //request.testDevices = @[ kGADSimulatorID, @"2077ef9a63d2b398840261c8221a0c9a",@"4b5a03f85a6fc1e62296001c2f9f6d52" ];
+    [[GADRewardBasedVideoAd sharedInstance] loadRequest:[GADRequest request]
+                                           withAdUnitID:REWARD_VIDEO_AD_UNIT_ID];
+}
+//prepare interstitial
+- (void)createAndLoadInterstitial {
+    self.interstitial =
+    [[GADInterstitial alloc] initWithAdUnitID:INTERSTITTIAL_AD_UNIT_ID];
+    
+    GADRequest *request = [GADRequest request];
+    // Request test ads on devices you specify. Your test device ID is printed to the console when
+    // an ad request is made.
+    //request.testDevices = @[ kGADSimulatorID, @"2077ef9a63d2b398840261c8221a0c9a",@"4b5a03f85a6fc1e62296001c2f9f6d52" ];
+    [self.interstitial loadRequest:request];
+}
+
+#pragma end ADMOB
 @end

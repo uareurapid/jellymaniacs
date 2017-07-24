@@ -19,7 +19,6 @@
 #import "VirtualCurrency.h"
 #import "VirtualGood.h"
 #import "VirtualCurrencyPack.h"
-#import "NonConsumableItem.h"
 #import "SingleUseVG.h"
 #import "PurchaseWithMarket.h"
 #import "PurchaseWithVirtualItem.h"
@@ -28,6 +27,7 @@
 #import "EquippableVG.h"
 #import "SingleUsePackVG.h"
 #import "UpgradeVG.h"
+#import <StoreKit/StoreKit.h>
 
 // Currencies
 NSString* const JELLY_CURRENCY_ITEM_ID = @"jelly_currency";
@@ -70,6 +70,8 @@ NSString* const JELLY_MANIACS_25LEVELS_PRODUCT_ID = @"jelly_maniacs_levels25";
 //virtual category
 VirtualCategory* JELLY_CATEGORY;
 
+//VirtualCategory* LIFETIME_THINGS_CATEGORY;
+
 //virtual currency
 VirtualCurrency* JELLY_CURRENCY;
 
@@ -92,7 +94,7 @@ VirtualCurrencyPack* PRODUCT_EXTRA_10_LEVELS;
 VirtualCurrencyPack* PRODUCT_EXTRA_10_MOVES;
 VirtualCurrencyPack* PRODUCT_EXTRA_5_MOVES;
 
-NonConsumableItem *NO_ADS_NON_CONS;
+LifetimeVG *NO_ADS_NON_CONS;
 NSString *NO_ADS_NON_CONS_ITEM_ID = @"no.ads";
 NSString *NO_ADS_PRODUCT_ID = @"no.ads.id";
 + (void)initialize{
@@ -105,22 +107,38 @@ NSString *NO_ADS_PRODUCT_ID = @"no.ads.id";
     
     //LEVELS
     
-    PRODUCT_EXTRA_10_LEVELS = [[VirtualCurrencyPack alloc] initWithName:@"10 Extra Levels" andDescription:@"10 Extra Levels"  andItemId:JELLY_MANIACS_10LEVELS_PACK_ITEM_ID andPurchaseType:[[PurchaseWithMarket alloc] initWithMarketItem:[[MarketItem alloc] initWithProductId:JELLY_MANIACS_10LEVELS_PRODUCT_ID andConsumable:kConsumable andPrice:1.99]]];
+    MarketItem* item10levels = [[MarketItem alloc] init];
+    [item10levels setPrice:1.99];
+    [item10levels setProductId:JELLY_MANIACS_10LEVELS_PRODUCT_ID];
+    
+    PRODUCT_EXTRA_10_LEVELS = [[VirtualCurrencyPack alloc] initWithName:@"25 Extra Levels" andDescription:@"25 Extra Levels"  andItemId:JELLY_MANIACS_10LEVELS_PACK_ITEM_ID andPurchaseType:[[PurchaseWithMarket alloc] initWithMarketItem:item10levels]];
     
     PRODUCT_EXTRA_10_LEVELS.currencyItemId = JELLY_CURRENCY_ITEM_ID;
     
     
-    PRODUCT_EXTRA_25_LEVELS = [[VirtualCurrencyPack alloc] initWithName:@"25 Extra Levels" andDescription:@"25 Extra Levels"  andItemId:JELLY_MANIACS_25LEVELS_PACK_ITEM_ID andPurchaseType:[[PurchaseWithMarket alloc] initWithMarketItem:[[MarketItem alloc] initWithProductId:JELLY_MANIACS_25LEVELS_PRODUCT_ID andConsumable:kConsumable andPrice:2.99]]];
+    MarketItem* item25levels = [[MarketItem alloc] init];
+    [item25levels setPrice:2.99];
+    [item25levels setProductId:JELLY_MANIACS_25LEVELS_PRODUCT_ID];
+    
+    PRODUCT_EXTRA_25_LEVELS = [[VirtualCurrencyPack alloc] initWithName:@"50 Extra Levels" andDescription:@"50 Extra Levels"  andItemId:JELLY_MANIACS_25LEVELS_PACK_ITEM_ID andPurchaseType:[[PurchaseWithMarket alloc] initWithMarketItem:item25levels]];
     
     PRODUCT_EXTRA_25_LEVELS.currencyItemId = JELLY_CURRENCY_ITEM_ID;
     
     //MOVES
     
-    PRODUCT_EXTRA_10_MOVES = [[VirtualCurrencyPack alloc] initWithName:@"10 Extra Moves" andDescription:@"10 Extra Moves" andItemId:JELLY_MANIACS_10MOVES_PACK_ITEM_ID andPurchaseType:[[PurchaseWithMarket alloc] initWithMarketItem:[[MarketItem alloc] initWithProductId:JELLY_MANIACS_10MOVES_PRODUCT_ID andConsumable:kConsumable andPrice:1.99]]];
+    MarketItem* item10Moves = [[MarketItem alloc] init];
+    [item10Moves setPrice:1.99];
+    [item10Moves setProductId:JELLY_MANIACS_10MOVES_PRODUCT_ID];
+    
+    PRODUCT_EXTRA_10_MOVES = [[VirtualCurrencyPack alloc] initWithName:@"10 Extra Moves" andDescription:@"10 Extra Moves" andItemId:JELLY_MANIACS_10MOVES_PACK_ITEM_ID andPurchaseType:[[PurchaseWithMarket alloc] initWithMarketItem:item10Moves]];
     
     PRODUCT_EXTRA_10_MOVES.currencyItemId = JELLY_CURRENCY_ITEM_ID;
     
-    PRODUCT_EXTRA_5_MOVES = [[VirtualCurrencyPack alloc] initWithName:@"5 Extra Moves" andDescription:@"5 Extra Moves" andItemId:JELLY_MANIACS_5MOVES_PACK_ITEM_ID andPurchaseType:[[PurchaseWithMarket alloc] initWithMarketItem:[[MarketItem alloc] initWithProductId:JELLY_MANIACS_5MOVES_PRODUCT_ID andConsumable:kConsumable andPrice:0.99]]];
+    MarketItem* item5Moves = [[MarketItem alloc] init];
+    [item5Moves setPrice:0.99];
+    [item5Moves setProductId:JELLY_MANIACS_5MOVES_PRODUCT_ID];
+    
+    PRODUCT_EXTRA_5_MOVES = [[VirtualCurrencyPack alloc] initWithName:@"5 Extra Moves" andDescription:@"5 Extra Moves" andItemId:JELLY_MANIACS_5MOVES_PACK_ITEM_ID andPurchaseType:[[PurchaseWithMarket alloc] initWithMarketItem:item5Moves]];
     
     PRODUCT_EXTRA_5_MOVES.currencyItemId = JELLY_CURRENCY_ITEM_ID;
                                
@@ -212,9 +230,19 @@ NSString *NO_ADS_PRODUCT_ID = @"no.ads.id";
     
     JELLY_CATEGORY  = [[VirtualCategory alloc] initWithName:@"Jelly" andGoodsItemIds:@[BLUE_JELLY_ITEM_ID, RED_JELLY_ITEM_ID, YELLOW_JELLY_ITEM_ID, GREEN_JELLY_ITEM_ID,PINK_JELLY_ITEM_ID]];
     
+    MarketItem *market = [[MarketItem alloc] init];
+    [market setProductId:NO_ADS_PRODUCT_ID];
+    [market setPrice:1.99];
     
     /** Non Consumables **/
-    NO_ADS_NON_CONS = [[NonConsumableItem alloc] initWithName:@"No Ads" andDescription:@"No more ads" andItemId:NO_ADS_NON_CONS_ITEM_ID andPurchaseType:[[PurchaseWithMarket alloc] initWithMarketItem:[[MarketItem alloc] initWithProductId:NO_ADS_PRODUCT_ID andConsumable:kNonConsumable andPrice:1.99]]];
+    
+   // NO_ADS_NON_CONS = [[LifetimeVG alloc] initWithName:@"No Ads" andDescription:@"No more ads" andItemId:NO_ADS_NON_CONS_ITEM_ID andPurchaseType:[[PurchaseWithMarket alloc] initWithMarketItem: market]];
+    
+    //LIFETIME_THINGS_CATEGORY  = [[VirtualCategory alloc] initWithName:@"Lifetime things" andGoodsItemIds:@[NO_ADS_PRODUCT_ID]];
+    
+    
+    
+    //NO_ADS_NON_CONS = [[LifetimeVG alloc] initWithName:@"No Ads" andDescription:@"No more ads" andItemId:NO_ADS_NON_CONS_ITEM_ID andPurchaseType:[[PurchaseWithMarket alloc] initWithMarketItem:[[MarketItem alloc] initWithProductId:NO_ADS_PRODUCT_ID andConsumable:kNonConsumable andPrice:1.99]]];
     
     /*PRODUCT_EXTRA_10_LEVELS = [[NonConsumableItem alloc] initWithName:@"10 Extra Levels" andDescription:@"10 Extra Levels" andItemId:JELLY_MANIACS_10LEVELS_PACK_ITEM_ID andPurchaseType:[[PurchaseWithMarket alloc] initWithMarketItem:[[MarketItem alloc] initWithProductId:JELLY_MANIACS_10LEVELS_PRODUCT_ID andConsumable:kNonConsumable andPrice:2.99]]];
     

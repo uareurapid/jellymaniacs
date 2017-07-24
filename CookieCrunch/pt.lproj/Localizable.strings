@@ -19,9 +19,9 @@
 "you_won"="Ganhaste";
 "new_best_score"="Novo recorde. Parabéns!";
 "no_more_levels"="Não existem níveis";
-"checkout_my_score_%lu"="Olha o meu recorde no Jelly Maniacs: %lu\n";
-"checkout_my_app"="Conheça o Jelly Maniacs, um jogo fantástico.";
-"thank_you_for_sharing"="Obrigado por partilhar o Jelly Maniacs.";
+"checkout_my_score_%lu"="Olha o meu recorde no Super Jelly Fruits Mania: %lu\n";
+"checkout_my_app"="Conheça o Super Jelly Fruits Mania, um jogo fantástico.";
+"thank_you_for_sharing"="Obrigado por partilhar o Super Jelly Fruits Mania.";
 "buy_10_levels"="Podes comprar 10 níveis extra para continuares a jogar.\n(Qualquer compra remove também os anúncios)";
 "buy_25_levels"="Podes comprar 25 níveis extra para continuares a jogar.\n(Qualquer compra remove também os anúncios)";
 "buy_levels_generic"="Podes comprar níveis extra para continuares a jogar.\n(Qualquer compra remove também os anúncios)";
@@ -37,9 +37,12 @@
 "current_balance"="Saldo Actual";
 "jelly_stars"="Estrelas";
 "no_more_moves" = "Jogadas insuficientes";
+"running_out_moves_video"="Vê um pequeno video e ganha 2 jogadas extra";
 "last_level_buy_warning" = "Último nível disponível";
 "running_out_moves"="Comprar jogadas extra para terminar o nível?\n(Qualquer compra remove também os anúncios)";
 "running_out_levels"="Comprar níveis extra para continuar a jogar?\n(Qualquer compra remove também os anúncios)";
 "restore_purchases"="Repor compras";
 "music_off"="Música desligada";
 "music_on"="Música ligada";
+"no_ads"="Sem anúncios";
+"no_ads_available"="De momento não existem anúncios disponíveis";

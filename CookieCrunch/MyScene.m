@@ -43,6 +43,8 @@ CGFloat myScale = 1.0;
 @property (strong, nonatomic) SKAction * passLevelSound;
 @property (strong, nonatomic) SKAction * gameOverSound;
 
+@property (strong, nonatomic) SKAction * rewardsSound;
+
 @property (strong, nonatomic) SKCropNode *cropLayer;
 @property (strong, nonatomic) SKNode *maskLayer;
 
@@ -79,7 +81,7 @@ CGFloat myScale = 1.0;
     
     // Put an image on the background. Because the scene's anchorPoint is
     // (0.5, 0.5), the background image will always be centered on the screen.
-    SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"grass-and-the-sky-background.jpg"];
+    SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"grass-and-the-sky-background.jpg"];//"@"grass-and-the-sky-background.jpg"
     background.name = @"background";
     [self addChild:background];
 
@@ -203,6 +205,8 @@ CGFloat myScale = 1.0;
   self.passLevelSound = [SKAction playSoundFileNamed:@"iuu.m4a" waitForCompletion:NO];
     
   self.gameOverSound = [SKAction playSoundFileNamed:@"gameover_broken.mp3" waitForCompletion:NO];
+    
+  self.rewardsSound = [SKAction playSoundFileNamed:@"magic_01.wav" waitForCompletion:NO];
 
 
   [SKLabelNode labelNodeWithFontNamed:@"GillSans-BoldItalic"];
@@ -981,6 +985,10 @@ CGFloat myScale = 1.0;
 }
 
 //play sounds from controller
+
+- (void)playRewardsSound {
+    [self runAction:self.rewardsSound];
+}
 
 - (void)playGameOverSound {
     [self runAction:self.gameOverSound];

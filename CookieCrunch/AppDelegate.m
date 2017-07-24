@@ -13,8 +13,8 @@
 #import "StoreInventory.h"
 #import "VirtualCurrency.h"
 #import "Constants.h"
-#import "ALSdk.h"
 #import "Appirater.h"
+@import GoogleMobileAds;
 
 //#define DEBUG_RUN
 
@@ -87,14 +87,20 @@
     }
     
     //initialize applovin sdk
-    [ALSdk initializeSdk];
+    // Initialize Google Mobile Ads SDK
+    // Sample AdMob app ID: ca-app-pub-9531252796858598~8861780110
+    [GADMobileAds configureWithApplicationID:@"ca-app-pub-9531252796858598~8861780110"];
+    
+    
+    //INTERSTITIAL_ADS    ca-app-pub-9531252796858598/4703043259
+    //REWARD_VIDEO ca-app-pub-9531252796858598/6932609016
     
     //API rater stuff
     //show it 5 days after
     //custom Rate code
     [Appirater setAppId:@"904072768"];
-    [Appirater setDaysUntilPrompt:5];
-    [Appirater setUsesUntilPrompt:0];
+    [Appirater setDaysUntilPrompt:0];
+    [Appirater setUsesUntilPrompt:2];
     [Appirater setSignificantEventsUntilPrompt:-1];
     [Appirater setTimeBeforeReminding:2];
     [Appirater setDebug:NO];
@@ -102,6 +108,7 @@
     
     //custom Rate code
     [Appirater appLaunched:YES];
+    
 
     return YES;
 }
@@ -127,6 +134,7 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
   // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    application.applicationIconBadgeNumber = 0;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
