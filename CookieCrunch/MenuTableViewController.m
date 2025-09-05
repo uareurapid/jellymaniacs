@@ -317,7 +317,7 @@ int balance;
                         [alert show];
                     }
                     else {
-                       [StoreInventory buyItemWithItemId:JELLY_MANIACS_10LEVELS_PACK_ITEM_ID andPayload:@"buy 10 extra levels"]; 
+                       [StoreInventory buyItemWithItemId:JELLY_MANIACS_10LEVELS_PACK_ITEM_ID andPayload:@"buy 25 extra levels"]; 
                     }
                     
                    
@@ -354,7 +354,7 @@ int balance;
                         [alert show];
                     }
                     else {
-                       [StoreInventory buyItemWithItemId:JELLY_MANIACS_25LEVELS_PACK_ITEM_ID andPayload:@"buy 25 extra levels"];
+                       [StoreInventory buyItemWithItemId:JELLY_MANIACS_25LEVELS_PACK_ITEM_ID andPayload:@"buy 50 extra levels"];
                     }
                     
                     
